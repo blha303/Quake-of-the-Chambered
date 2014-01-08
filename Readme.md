@@ -7,6 +7,7 @@ This mod is based on the game "Prelude of the Chambered" which was developed by 
 ## Features
 
 | Feature | Description |
+| ------------- | ------------- | ----- |
 | Shell | An in game bash which lets the player communicate with the game. |
 | Mouse support | Move the camera around the x-axis or use it to navigate through the menu. |
 | Config-file | a file which contains parameters like resolution, mouse speed, etc. |
