@@ -1,0 +1,213 @@
+package com.mojang.escape.gui;
+
+import java.util.Random;
+
+import com.mojang.escape.Art;
+import com.mojang.escape.Game;
+import com.mojang.escape.entities.Item;
+
+import de.decgod.mod.InGameLogger;
+import de.decgod.mod.Scene;
+
+public class Screen extends Bitmap {
+
+	private static final int PANEL_HEIGHT = 29;
+	private Bitmap testBitmap;
+	private Bitmap3D viewport;
+
+	public Screen(int width, int height) {
+		super(width, height);
+
+		viewport = new Bitmap3D(width, height);
+
+		Random random = new Random();
+		testBitmap = new Bitmap(64, 64);
+		for (int i = 0; i < 64 * 64; i++) {
+			testBitmap.pixels[i] = random.nextInt() * (random.nextInt(5) / 4);
+		}
+	}
+
+	public void render(Game game, boolean hasFocus) {
+		if (game.level == null) {
+			fill(0, 0, width, height, 0);
+		} else {
+			boolean itemUsed = Scene.getInstance().getPlayer().itemUseTime > 0;
+			Item item = Scene.getInstance().getPlayer().items[Scene
+					.getInstance().getPlayer().selectedSlot];
+
+			if (game.pauseTime > 0) {
+				drawLevelSwitch(game);
+			} else {
+
+				// renders the viewport
+				viewport.render(game);
+
+				// renders the postProcessing-layer
+				viewport.postProcess(game.level);
+
+				// Block block = game.level.getBlock((int)
+				// (Scene.getInstance().getPlayer().x + 0.5),(int)
+				// (Scene.getInstance().getPlayer().z + 0.5));
+
+				// if (block.messages != null && hasFocus) {
+				// for (int y = 0; y < block.messages.length; y++) {
+				// viewport.draw(block.messages[y],
+				// (width - block.messages[y].length() * 6) / 2,
+				// (viewport.height - block.messages.length * 8)
+				// / 2 + y * 8 + 1, 0x111111);
+				// viewport.draw(block.messages[y],
+				// (width - block.messages[y].length() * 6) / 2,
+				// (viewport.height - block.messages.length * 8)
+				// / 2 + y * 8, 0x555544);
+				//
+				// }
+				// }
+
+				draw(viewport, 0, 0);
+
+				int xx = (int) (Scene.getInstance().getPlayer().turnBob * 32);
+				int yy = (int) (Math
+						.sin(Scene.getInstance().getPlayer().bobPhase * 0.1)
+						* 1 * Scene.getInstance().getPlayer().bob + Scene
+						.getInstance().getPlayer().bob * 2);
+
+				if (itemUsed)
+					xx = yy = 0;
+				xx += width / 2;
+				yy += height - 15 * 3;
+
+				drawWeapons(itemUsed, item, xx, yy);
+
+				if (Scene.getInstance().getPlayer().hurtTime > 0
+						|| Scene.getInstance().getPlayer().dead) {
+					drawDeadMessage();
+				}
+			}
+
+
+			drawHud(item);
+
+		}
+
+		if (game.menu != null) {
+			drawMenu(game);
+		}
+
+		if (!hasFocus) {
+			drawNotFocused();
+		}
+	}
+
+	private void drawLevelSwitch(Game game) {
+		fill(0, 0, width, height, 0);
+		String[] messages = { "Entering " + game.level.name, };
+		for (int y = 0; y < messages.length; y++) {
+			draw(messages[y], (width - messages[y].length() * 6) / 2,
+					(viewport.height - messages.length * 8) / 2 + y * 8 + 1,
+					0x111111);
+			draw(messages[y], (width - messages[y].length() * 6) / 2,
+					(viewport.height - messages.length * 8) / 2 + y * 8,
+					0x555544);
+		}
+	}
+
+	private void drawMenu(Game game) {
+		for (int i = 0; i < pixels.length; i++) {
+			pixels[i] = (pixels[i] & 0xfcfcfc) >> 2;
+		}
+		game.menu.render(this);
+	}
+
+	private void drawNotFocused() {
+		for (int i = 0; i < pixels.length; i++) {
+			pixels[i] = (pixels[i] & 0xfcfcfc) >> 2;
+		}
+		if (System.currentTimeMillis() / 450 % 2 != 0) {
+			String msg = "Click to focus!";
+			draw(msg, (width - msg.length() * 6) / 2, height / 3 + 4, 0xffffff);
+		}
+	}
+
+	private void drawHud(Item item) {
+		// draws the panel, hud background
+		// draw(Art.panel, 0, height - PANEL_HEIGHT, 0, 0, width,PANEL_HEIGHT,
+		// Art.getCol(0x707070));
+
+		// draws special characters such as keys, hearts, etc. and the amount of
+		// it
+		draw("å", 3, height - 26 + 0, 0x00ffff, 1);
+		draw("" + Scene.getInstance().getPlayer().keys + "/4", 10,
+				height - 26 + 0, 0xffffff);
+		draw("Ä", 3, height - 26 + 8, 0xffff00);
+		draw("" + Scene.getInstance().getPlayer().loot, 10, height - 26 + 8,
+				0xffffff);
+		draw("Å", 3, height - 26 + 16, 0xff0000);
+		draw("" + Scene.getInstance().getPlayer().health, 10, height - 26 + 16,
+				0xffffff);
+
+		// draws items in hud
+		// for (int i = 0; i < 8; i++) {
+		// Item slotItem = Scene.getInstance().getPlayer().items[i];
+		// if (slotItem != Item.none) {
+		// draw(Art.items, 30 + i * 32, height - PANEL_HEIGHT + 2,
+		// slotItem.icon * 32, 0, 32, 32,
+		// Art.getCol(slotItem.color));
+		// if (slotItem == Item.pistol) {
+		// String str = "" + Scene.getInstance().getPlayer().ammo;
+		// draw(str, 30 + i * 32 + 17 - str.length() * 6, height
+		// - PANEL_HEIGHT + 1 + 10, 0x555555);
+		// }
+		// if (slotItem == Item.potion) {
+		// String str = "" + Scene.getInstance().getPlayer().potions;
+		// draw(str, 30 + i * 32 + 17 - str.length() * 6, height
+		// - PANEL_HEIGHT + 1 + 10, 0x555555);
+		// }
+		// if (slotItem == Item.medikit) {
+		// String str = "" + Scene.getInstance().getPlayer().getMedikits();
+		// draw(str, 30 + i * 32 + 17 - str.length() * 6, height
+		// - PANEL_HEIGHT + 1 + 10, 0x555555);
+		// }
+		// }
+		// }
+
+		// draws the rectangle around the selected item
+		// draw(Art.items, 30 + Scene.getInstance().getPlayer().selectedSlot *
+		// 16, height - PANEL_HEIGHT + 2, 0, 48, 17, 17, Art.getCol(0xffffff));
+
+		// draws the itemname
+		// draw(item.name, 26 + (8 * 16 - item.name.length() * 4) / 2,height -
+		// 9, 0xffffff);
+
+		// Ninjadamage checks if bash is open, if
+		if (Scene.getInstance().getPlayer().getBash().isOpen()) {
+			Scene.getInstance().getPlayer().getBash().log(this);
+		}
+
+		InGameLogger.getInstance().log(this);
+
+	}
+
+	private void drawDeadMessage() {
+		double offs = 1.5 - Scene.getInstance().getPlayer().hurtTime / 30.0;
+		Random random = new Random(111);
+		if (Scene.getInstance().getPlayer().dead)
+			offs = 0.5;
+		for (int i = 0; i < pixels.length; i++) {
+			double xp = ((i % width) - viewport.width / 2.0) / width * 2;
+			double yp = ((i / width) - viewport.height / 2.0) / viewport.height
+					* 2;
+
+			if (random.nextDouble() + offs < Math.sqrt(xp * xp + yp * yp))
+				pixels[i] = (random.nextInt(5) / 4) * 0x550000;
+		}
+	}
+
+	private void drawWeapons(boolean itemUsed, Item item, int xx, int yy) {
+		if (item != Item.none) {
+			scaleDraw(Art.items, 1, xx - 15 * 2, yy - 15,
+					32 * 2 * item.icon + 1, 32 * 2 + 1 * 2
+							+ (itemUsed ? 32 * 2 : 0), 30 * 2, 30 * 2);
+		}
+	}
+
+}
