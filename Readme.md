@@ -7,21 +7,13 @@ This mod is based on the game "Prelude of the Chambered" which was developed by 
 ## Features
 
 | Feature | Description |
-| ------------- | ------------- |
 | Shell | An in game bash which lets the player communicate with the game. |
-| ------------- | ------------- |
 | Mouse support | Move the camera around the x-axis or use it to navigate through the menu. |
-| ------------- | ------------- |
 | Config-file | a file which contains parameters like resolution, mouse speed, etc. |
-| ------------- | ------------- |
 | Added an item (med kit) | Just a test to get to know how the game handles it. |
-| ------------- | ------------- |
 | Increased texture size | . |
-| ------------- | ------------- |
 | Increased color palette | . |
-| ------------- | ------------- |
 | Completely HUD removal | . |
-| ------------- | ------------- |
 | Fullscreen support! | (Software rendered) |
 
 
