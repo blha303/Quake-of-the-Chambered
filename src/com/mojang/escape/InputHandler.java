@@ -1,6 +1,6 @@
 package com.mojang.escape;
 
-import java.awt.Robot;
+import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
@@ -14,44 +14,42 @@ import java.awt.event.MouseWheelListener;
 import de.decgod.mod.RuntimeConfiguration;
 import de.decgod.mod.Scene;
 
-public class InputHandler implements KeyListener, FocusListener, MouseListener,
-		MouseMotionListener, MouseWheelListener {
+public class InputHandler implements KeyListener, FocusListener, MouseListener, MouseMotionListener, MouseWheelListener {
+
 	public boolean[] keys = new boolean[65536];
 
 	// NinjadamageMod
 	private int oldx = 0;
-	private Robot r = null;
+	private Robot r;
 	private boolean mouseMoving = true;
 
-	// NinjadamageMod
+    public InputHandler() {
+        try {
+            r = new Robot();
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // NinjadamageMod
 
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
 		
 		Scene.getInstance().getPlayer().setMouse(arg0.getPoint());
-		
-		try {
-			if (r == null) {
-				r = new Robot();
-			}
 
-			// is mouse on the left side off the window?
-			if (arg0.getPoint().getX() > 0
-					&& arg0.getPoint().getX() < RuntimeConfiguration.getInstance()
-							.getScreen().getWidth() / 4) {
-				centerMouse();
-			}
+        if (arg0.getPoint().getX() > 0
+                && arg0.getPoint().getX() < RuntimeConfiguration.getInstance()
+                .getScreen().getWidth() / 4) {
+            centerMouse();
+        }
 
-			// is mouse on the right side off the window?
-			if (arg0.getPoint().getX() > (rightBorder - RuntimeConfiguration.getInstance()
-					.getScreen().getWidth() / 4)
-					&& arg0.getPoint().getX() < rightBorder) {
-				centerMouse();
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        // is mouse on the right side off the window?
+        if (arg0.getPoint().getX() > (rightBorder - RuntimeConfiguration.getInstance()
+                .getScreen().getWidth() / 4)
+                && arg0.getPoint().getX() < rightBorder) {
+            centerMouse();
+        }
 
 		if (mouseMoving) {
 			if (arg0.getPoint().getX() > oldx && oldx != 0) {
@@ -115,10 +113,7 @@ public class InputHandler implements KeyListener, FocusListener, MouseListener,
 		if (code > 0 && code < keys.length) {
 			keys[code] = true;
 		}
-		
-		if (Scene.getInstance().getPlayer().getBash().isOpen()) {
-			Scene.getInstance().getPlayer().getBash().listen(e);
-		}
+
 	}
 
 	@Override
@@ -127,6 +122,11 @@ public class InputHandler implements KeyListener, FocusListener, MouseListener,
 		if (code > 0 && code < keys.length) {
 			keys[code] = false;
 		}
+
+        if (Scene.getInstance().getPlayer().getBash().isOpen()) {
+            Scene.getInstance().getPlayer().getBash().listen(e);
+        }
+
 	}
 
 	@Override
@@ -138,6 +138,7 @@ public class InputHandler implements KeyListener, FocusListener, MouseListener,
 			if (Scene.getInstance().getPlayer().selectedSlot == 8) {
 				Scene.getInstance().getPlayer().selectedSlot = 0;
 			}
+            Scene.getInstance().getGame().menu.tick(Scene.getInstance().getGame(), true, false, false, false, false);
 		}
 		if (e.getWheelRotation() > 0) {
 
@@ -146,7 +147,9 @@ public class InputHandler implements KeyListener, FocusListener, MouseListener,
 			}
 
 			Scene.getInstance().getPlayer().selectedSlot--;
-		}
+            Scene.getInstance().getGame().menu.tick(Scene.getInstance().getGame(), false, true, false, false, false);
+
+        }
 	}
 
 	// Ninjadamage

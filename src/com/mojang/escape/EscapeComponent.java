@@ -151,7 +151,7 @@ public class EscapeComponent extends Canvas implements Runnable {
 	private void render() {
 		if (hadFocus != hasFocus()) {
 			hadFocus = !hadFocus;
-			setCursor(hadFocus ? defaultCursor : defaultCursor);
+			setCursor(hadFocus ? emptyCursor : defaultCursor);
 		}
 		
 		bs = getBufferStrategy();

@@ -207,9 +207,12 @@ public class Screen extends Bitmap {
 
 	private void drawWeapons(boolean itemUsed, Item item, int xx, int yy) {
 		if (item != Item.none) {
-			scaleDraw(Art.items, 1, xx - 15 * 2, yy - 15,
-					32 * 2 * item.icon + 1, 32 * 2 + 1 * 2
-							+ (itemUsed ? 32 * 2 : 0), 30 * 2, 30 * 2);
+//			scaleDraw(Art.items, 1, xx - 15 * 2, yy - 15,
+//					32 * 2 * item.icon + 1, 32 * 2 + 1 * 2
+//							+ (itemUsed ? 32 * 2 : 0), 30 * 2, 30 * 2);
+//            if (item != Item.none) {
+                scaleDraw(Art.items, 3, xx, yy, 16 * item.icon + 1, 16 + 1 + (itemUsed ? 16 : 0), 15, 15, Art.getCol(item.color));
+//            }
 		}
 	}
 

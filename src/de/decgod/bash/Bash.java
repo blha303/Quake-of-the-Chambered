@@ -60,6 +60,7 @@ public class Bash {
 			input = String.valueOf(e.getKeyChar());
 			// controlls the input
 			controlInputString();
+
 			// if the user press's enter...
 			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 				// if there is a command (validation) - execute it.

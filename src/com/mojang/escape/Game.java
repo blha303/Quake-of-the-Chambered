@@ -68,10 +68,8 @@ public class Game {
 		boolean lk = keys[KeyEvent.VK_LEFT] || keys[KeyEvent.VK_NUMPAD4];
 		boolean rk = keys[KeyEvent.VK_RIGHT] || keys[KeyEvent.VK_NUMPAD6];
 
-		boolean up = keys[KeyEvent.VK_W] || keys[KeyEvent.VK_UP]
-				|| keys[KeyEvent.VK_NUMPAD8];
-		boolean down = keys[KeyEvent.VK_S] || keys[KeyEvent.VK_DOWN]
-				|| keys[KeyEvent.VK_NUMPAD2];
+		boolean up = keys[KeyEvent.VK_W] || keys[KeyEvent.VK_UP] || keys[KeyEvent.VK_NUMPAD8];
+		boolean down = keys[KeyEvent.VK_S] || keys[KeyEvent.VK_DOWN] || keys[KeyEvent.VK_NUMPAD2];
 		boolean left = keys[KeyEvent.VK_A] || (strafe && lk);
 		boolean right = keys[KeyEvent.VK_D] || (strafe && rk);
 
@@ -85,7 +83,11 @@ public class Game {
 		if (keys[130] /* aka cirkumflex */) {
 			if (!player.getBash().isOpen()) {
 				player.getBash().setOpen(true);
-			}
+			} else if(player.getBash().isOpen()){
+                player.getBash().setOpen(false);
+            }
+
+            keys[130] = false;
 		}
 
 		if (keys[KeyEvent.VK_ESCAPE]) {
