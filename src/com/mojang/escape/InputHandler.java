@@ -11,6 +11,8 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
+import com.mojang.escape.menu.*;
+import com.mojang.escape.menu.Menu;
 import de.decgod.mod.RuntimeConfiguration;
 import de.decgod.mod.Scene;
 
@@ -131,28 +133,31 @@ public class InputHandler implements KeyListener, FocusListener, MouseListener, 
 
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
-		if (e.getWheelRotation() < 0) {
+
+        int wheelRotation = e.getWheelRotation();
+
+        Menu menu = Scene.getInstance().getGame().menu;
+        if(menu != null)
+            menu.tick(Scene.getInstance().getGame(), wheelRotation < 0, wheelRotation > 0, false, false, false);
+
+        if (wheelRotation < 0) {
 
 			Scene.getInstance().getPlayer().selectedSlot++;
 
 			if (Scene.getInstance().getPlayer().selectedSlot == 8) {
 				Scene.getInstance().getPlayer().selectedSlot = 0;
 			}
-            Scene.getInstance().getGame().menu.tick(Scene.getInstance().getGame(), true, false, false, false, false);
 		}
-		if (e.getWheelRotation() > 0) {
+		if (wheelRotation > 0) {
 
 			if (Scene.getInstance().getPlayer().selectedSlot == 0) {
 				Scene.getInstance().getPlayer().selectedSlot = 8;
 			}
 
 			Scene.getInstance().getPlayer().selectedSlot--;
-            Scene.getInstance().getGame().menu.tick(Scene.getInstance().getGame(), false, true, false, false, false);
 
         }
 	}
-
-	// Ninjadamage
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {

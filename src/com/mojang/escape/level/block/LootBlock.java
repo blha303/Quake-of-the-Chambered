@@ -23,7 +23,7 @@ public class LootBlock extends Block {
 			sprite.removed = true;
 			taken = true;
 			blocksMotion = false;
-			((Player) entity).loot++;
+			((Player) entity).gold++;
 			Sound.pickup.play();
 			
 		}

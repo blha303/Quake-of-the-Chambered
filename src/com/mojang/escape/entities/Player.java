@@ -21,7 +21,7 @@ public class Player extends Entity {
 	public int hurtTime = 0;
 	public int health = 20;
 	public int keys = 0;
-	public int loot = 0;
+	public int gold = 0;
 	public boolean dead = false;
 	private int deadTime = 0;
 	public int ammo = 0;
@@ -32,13 +32,11 @@ public class Player extends Entity {
 	double rotSpeed = 0;
 	public Item[] items = new Item[8];
 	
-	//extracted
 	private double walkSpeed = 0.3;
 	private String playername = RuntimeConfiguration.getInstance().getPlayername();
 	private Bash bash = new Bash();
 	private Point mouse = new Point(0,0);
 	double walkspeedExtra = 0.025;
-	
 	private int medikits = 0;
 	
 	public String getPosition(){
@@ -58,8 +56,6 @@ public class Player extends Entity {
 		for (int i = 0; i < items.length; i++) {
 			items[i] = Item.none;
 		}
-		
-		addLoot(Item.powerglove);
 	}
 	
 	public void turnLeft(double variation){
