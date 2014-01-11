@@ -96,7 +96,8 @@ public class InputHandler implements KeyListener, FocusListener, MouseListener,
 		if (arg0.getButton() == MouseEvent.BUTTON1) {
 			keys[32] = true;
 		}
-	}
+        mouseMoved(arg0);
+    }
 
 	// NinjadamageMod
 
@@ -169,7 +170,7 @@ public class InputHandler implements KeyListener, FocusListener, MouseListener,
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-
+        mouseMoved(arg0);
 	}
 
 	@Override
@@ -179,6 +180,7 @@ public class InputHandler implements KeyListener, FocusListener, MouseListener,
 
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
+        mouseMoved(arg0);
 	}
 
 }

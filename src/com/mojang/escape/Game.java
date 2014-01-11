@@ -80,8 +80,6 @@ public class Game {
 
 		boolean use = keys[KeyEvent.VK_SPACE];
 
-		// Ninjadamage
-
 		manageItemUse(keys);
 
 		if (keys[130] /* aka cirkumflex */) {
@@ -90,9 +88,6 @@ public class Game {
 			}
 		}
 
-		// Ninjadamage
-
-		
 		if (keys[KeyEvent.VK_ESCAPE]) {
 			keys[KeyEvent.VK_ESCAPE] = false;
 			if (menu == null) {

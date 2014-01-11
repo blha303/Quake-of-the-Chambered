@@ -20,3 +20,6 @@ This mod is based on the game "Prelude of the Chambered" which was developed by 
 
 This page will be replaced in the future. It shows the current list of features I've worked out so far.
 If you've got any questions, wishes or proposals - write me a mail, a pm, via icq, twitter or a nice comment :)
+
+TODO:
+- Experience points ! :) ?

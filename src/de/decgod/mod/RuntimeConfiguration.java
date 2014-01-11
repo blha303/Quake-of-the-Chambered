@@ -1,11 +1,10 @@
 package de.decgod.mod;
 
-import java.awt.Dimension;
-
-import javax.swing.JFrame;
-
 import com.mojang.escape.EscapeComponent;
-import de.decgod.theme.Theme;
+import de.decgod.view.Theme;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * @author Benjamin
