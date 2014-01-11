@@ -5,22 +5,21 @@ import com.mojang.escape.Game;
 import com.mojang.escape.Sound;
 import com.mojang.escape.gui.Bitmap;
 
-import de.decgod.mod.OptionsHandler;
+import de.decgod.mod.RuntimeConfiguration;
 
 public class PauseMenu extends Menu {
-	private String[] options = { "Abort game", "Continue" };
-	private int selected = 1;
+	private String[] options = {"Continue", "Abort game" };
+	private int selected = 0;
 
 	@Override
 	public void render(Bitmap target) {
-		target.draw(Art.logo, 0, 8, 0, 0, OptionsHandler.getInstance().getWidth(), 36, Art.getCol(0xffffff));
+		target.draw(Art.logo, 0, 8, 0, 0, RuntimeConfiguration.getInstance().getWidth(), 36, Art.getCol(RuntimeConfiguration.getInstance().getTheme().white));
 
 		for (int i = 0; i < options.length; i++) {
 			String msg = options[i];
-			int col = 0x909090;
+			int col = RuntimeConfiguration.getInstance().getTheme().inactiveText;
 			if (selected == i) {
-				msg = "-> " + msg;
-				col = 0xffff80;
+				col = RuntimeConfiguration.getInstance().getTheme().activeText;
 			}
 			target.draw(msg, 40, 60 + i * 10, Art.getCol(col));
 		}
@@ -36,11 +35,11 @@ public class PauseMenu extends Menu {
 		if (use) {
 			Sound.click1.play();
 			if (selected == 0) {
-				game.setMenu(new TitleMenu());
-			}
+                game.setMenu(null);
+            }
 			if (selected == 1) {
-				game.setMenu(null);
-			}
+                game.setMenu(new TitleMenu());
+            }
 		}
 	}
 }

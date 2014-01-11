@@ -17,18 +17,17 @@ import de.decgod.bashcommands.Help;
 import de.decgod.bashcommands.Position;
 import de.decgod.bashcommands.Spawn;
 import de.decgod.mod.InGameLogger;
-import de.decgod.mod.OptionsHandler;
+import de.decgod.mod.RuntimeConfiguration;
 
 public class Bash {
 
 	private boolean isOpen;
 	private String command;
 	private String input;
-	private String allowedChars = OptionsHandler.getInstance()
+	private String allowedChars = RuntimeConfiguration.getInstance()
 			.getAllowedChars();
 	private boolean rendering = false;
-	private Bitmap consoleBackground = new Bitmap(OptionsHandler.getInstance()
-			.getScreen().width, 12);
+	private Bitmap consoleBackground = new Bitmap(RuntimeConfiguration.getInstance().getScreen().width, 12);
 	private List<IAction> commands;
 
 	public Bash() {

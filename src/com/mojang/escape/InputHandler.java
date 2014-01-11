@@ -11,7 +11,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
-import de.decgod.mod.OptionsHandler;
+import de.decgod.mod.RuntimeConfiguration;
 import de.decgod.mod.Scene;
 
 public class InputHandler implements KeyListener, FocusListener, MouseListener,
@@ -37,14 +37,14 @@ public class InputHandler implements KeyListener, FocusListener, MouseListener,
 
 			// is mouse on the left side off the window?
 			if (arg0.getPoint().getX() > 0
-					&& arg0.getPoint().getX() < OptionsHandler.getInstance()
-							.getScreen().getWidth() / 3) {
+					&& arg0.getPoint().getX() < RuntimeConfiguration.getInstance()
+							.getScreen().getWidth() / 4) {
 				centerMouse();
 			}
 
 			// is mouse on the right side off the window?
-			if (arg0.getPoint().getX() > (rightBorder - OptionsHandler.getInstance()
-					.getScreen().getWidth() / 3)
+			if (arg0.getPoint().getX() > (rightBorder - RuntimeConfiguration.getInstance()
+					.getScreen().getWidth() / 4)
 					&& arg0.getPoint().getX() < rightBorder) {
 				centerMouse();
 			}
@@ -80,16 +80,16 @@ public class InputHandler implements KeyListener, FocusListener, MouseListener,
 		int screenCenterX = 0, screenCenterY = 0;
 
 		screenCenterX = EscapeComponent.frameOut.getX()
-				+ (int) OptionsHandler.getInstance().getScreen().getWidth() / 2;
+				+ (int) RuntimeConfiguration.getInstance().getScreen().getWidth() / 2;
 		screenCenterY = EscapeComponent.frameOut.getY()
-				+ (int) OptionsHandler.getInstance().getScreen().getHeight() / 2;
+				+ (int) RuntimeConfiguration.getInstance().getScreen().getHeight() / 2;
 
 		oldx = 0;
 		r.mouseMove(screenCenterX, screenCenterY);
 
 	}
 
-	int rightBorder = (int) OptionsHandler.getInstance().getScreen().getWidth();
+	int rightBorder = (int) RuntimeConfiguration.getInstance().getScreen().getWidth();
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
@@ -105,6 +105,7 @@ public class InputHandler implements KeyListener, FocusListener, MouseListener,
 		for (int i = 0; i < keys.length; i++) {
 			keys[i] = false;
 		}
+        centerMouse();
 	}
 
 	@Override
@@ -127,7 +128,6 @@ public class InputHandler implements KeyListener, FocusListener, MouseListener,
 		}
 	}
 
-	// NinjadamageMod
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		if (e.getWheelRotation() < 0) {

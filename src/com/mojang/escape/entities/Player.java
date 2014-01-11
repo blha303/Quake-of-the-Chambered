@@ -10,7 +10,7 @@ import com.mojang.escape.level.block.IceBlock;
 import com.mojang.escape.level.block.WaterBlock;
 
 import de.decgod.bash.Bash;
-import de.decgod.mod.OptionsHandler;
+import de.decgod.mod.RuntimeConfiguration;
 
 public class Player extends Entity {
 	
@@ -34,7 +34,7 @@ public class Player extends Entity {
 	
 	//extracted
 	private double walkSpeed = 0.3;
-	private String playername = OptionsHandler.getInstance().getPlayername();
+	private String playername = RuntimeConfiguration.getInstance().getPlayername();
 	private Bash bash = new Bash();
 	private Point mouse = new Point(0,0);
 	double walkspeedExtra = 0.025;

@@ -6,7 +6,7 @@ import com.mojang.escape.Sound;
 import com.mojang.escape.entities.Player;
 import com.mojang.escape.gui.Bitmap;
 
-import de.decgod.mod.OptionsHandler;
+import de.decgod.mod.RuntimeConfiguration;
 
 public class LoseMenu extends Menu {
 	private int tickDelay = 30;
@@ -19,7 +19,7 @@ public class LoseMenu extends Menu {
 
 	@Override
 	public void render(Bitmap target) {
-		target.draw(Art.logo, 0, 10, 0, 39, OptionsHandler.getInstance().getWidth(), 23, Art.getCol(0xffffff));
+		target.draw(Art.logo, 0, 10, 0, 39, RuntimeConfiguration.getInstance().getWidth(), 23, Art.getCol(0xffffff));
 
 		int seconds = player.time / 60;
 		int minutes = seconds / 60;

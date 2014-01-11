@@ -5,27 +5,26 @@ import com.mojang.escape.Game;
 import com.mojang.escape.Sound;
 import com.mojang.escape.gui.Bitmap;
 
-import de.decgod.mod.OptionsHandler;
-import de.decgod.mod.Scene;
+import de.decgod.mod.RuntimeConfiguration;
 
 public class TitleMenu extends Menu {
-	private String[] options = { "New game", "Instructions", "About" };
+	private String[] options = { "New game", "Exit" };
 	private int selected = 0;
 	private boolean firstTick = true;
 
 	@Override
 	public void render(Bitmap target) {
 		
-		target.fill(0, 0, OptionsHandler.getInstance().getWidth(), OptionsHandler.getInstance().getHeight(),0x000000);
-		target.draw(Art.logo, 80, 8, 0, 0, OptionsHandler.getInstance().getWidth()/2, 36);
+		target.fill(0, 0, RuntimeConfiguration.getInstance().getWidth(), RuntimeConfiguration.getInstance().getHeight(),RuntimeConfiguration.getInstance().getTheme().black);
+		target.draw(Art.logo, 80, 8, 0, 0, RuntimeConfiguration.getInstance().getWidth()/2, 36);
 		
 		for (int i = 0; i < options.length; i++) {
 			String msg = options[i];
-			int col = 0xEEEEEE;
+			int col = RuntimeConfiguration.getInstance().getTheme().inactiveText;
 			if (selected == i) {
-				col = 0x00b4df;
+				col = RuntimeConfiguration.getInstance().getTheme().activeText;
 			}
-			target.draw(msg, (OptionsHandler.getInstance().getWidth()/2)-(60), (OptionsHandler.getInstance().getHeight()/2) + i * 10, Art.getCol(col));
+			target.draw(msg, (RuntimeConfiguration.getInstance().getWidth()/2)-(60), (RuntimeConfiguration.getInstance().getHeight()/2) + i * 10, Art.getCol(col));
 		}
 	}
 
@@ -47,10 +46,7 @@ public class TitleMenu extends Menu {
 				game.newGame();
 			}
 			if (selected == 1) {
-				game.setMenu(new InstructionsMenu());
-			}
-			if (selected == 2) {
-				game.setMenu(new AboutMenu());
+                System.exit(0);
 			}
 		}
 	}

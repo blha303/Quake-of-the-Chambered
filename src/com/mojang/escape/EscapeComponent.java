@@ -1,7 +1,6 @@
 package com.mojang.escape;
 
 import java.awt.BorderLayout;
-import java.awt.BufferCapabilities;
 import java.awt.Canvas;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -17,15 +16,15 @@ import javax.swing.JPanel;
 
 import com.mojang.escape.gui.Screen;
 
-import de.decgod.mod.OptionsHandler;
+import de.decgod.mod.RuntimeConfiguration;
 
 public class EscapeComponent extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 
 	// ninjadamage Mod
-	private final int WIDTH = OptionsHandler.getInstance().getWidth();
-	private final int HEIGHT = OptionsHandler.getInstance().getHeight();
-	private final int SCALE = OptionsHandler.getInstance().getScale();
+	private final int WIDTH = RuntimeConfiguration.getInstance().getWidth();
+	private final int HEIGHT = RuntimeConfiguration.getInstance().getHeight();
+	private final int SCALE = RuntimeConfiguration.getInstance().getScalefactor();
 	private final int width_scaled = WIDTH * SCALE;
 	private final int height_scaled = HEIGHT * SCALE;
 	private final int screenSize = WIDTH * HEIGHT;
@@ -44,7 +43,7 @@ public class EscapeComponent extends Canvas implements Runnable {
 	private boolean hadFocus = false;
 
 	public EscapeComponent() {
-		Dimension size = OptionsHandler.getInstance().getScreen().getSize();
+		Dimension size = RuntimeConfiguration.getInstance().getScreen().getSize();
 		setSize(size);
 		setPreferredSize(size);
 		setMinimumSize(size);
@@ -87,6 +86,8 @@ public class EscapeComponent extends Canvas implements Runnable {
 		}
 	}
 
+    public static int frames;
+
 	@Override
 	public void run() {
 
@@ -118,7 +119,7 @@ public class EscapeComponent extends Canvas implements Runnable {
 
 				tickCount++;
 				if (tickCount % 60 == 0) {
-					System.out.println(frames + " fps");
+                    this.frames = frames;
 					lastTime += 1000;
 					frames = 0;
 				}
@@ -150,7 +151,7 @@ public class EscapeComponent extends Canvas implements Runnable {
 	private void render() {
 		if (hadFocus != hasFocus()) {
 			hadFocus = !hadFocus;
-			setCursor(hadFocus ? emptyCursor : defaultCursor);
+			setCursor(hadFocus ? defaultCursor : defaultCursor);
 		}
 		
 		bs = getBufferStrategy();
@@ -174,7 +175,7 @@ public class EscapeComponent extends Canvas implements Runnable {
 		
 	public static void main(String[] args) {
 		EscapeComponent game = new EscapeComponent();
-		JFrame frame = new JFrame("Prelude of the Chambered!");
+		JFrame frame = new JFrame("Decay of the Goddess");
 		frameOut = frame;
 		JPanel panel = new JPanel(new BorderLayout());
 

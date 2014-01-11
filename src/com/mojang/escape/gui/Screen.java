@@ -1,8 +1,10 @@
 package com.mojang.escape.gui;
 
+import java.awt.*;
 import java.util.Random;
 
 import com.mojang.escape.Art;
+import com.mojang.escape.EscapeComponent;
 import com.mojang.escape.Game;
 import com.mojang.escape.entities.Item;
 
@@ -84,6 +86,7 @@ public class Screen extends Bitmap {
 				}
 			}
 
+            draw(EscapeComponent.frames + "", 0,0, 0xFFFFFF);
 
 			drawHud(item);
 
@@ -135,13 +138,13 @@ public class Screen extends Bitmap {
 
 		// draws special characters such as keys, hearts, etc. and the amount of
 		// it
-		draw("å", 3, height - 26 + 0, 0x00ffff, 1);
+		draw("ï¿½", 3, height - 26 + 0, 0x00ffff, 1);
 		draw("" + Scene.getInstance().getPlayer().keys + "/4", 10,
 				height - 26 + 0, 0xffffff);
-		draw("Ä", 3, height - 26 + 8, 0xffff00);
+		draw("ï¿½", 3, height - 26 + 8, 0xffff00);
 		draw("" + Scene.getInstance().getPlayer().loot, 10, height - 26 + 8,
 				0xffffff);
-		draw("Å", 3, height - 26 + 16, 0xff0000);
+		draw("ï¿½", 3, height - 26 + 16, 0xff0000);
 		draw("" + Scene.getInstance().getPlayer().health, 10, height - 26 + 16,
 				0xffffff);
 

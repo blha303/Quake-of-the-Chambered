@@ -16,11 +16,8 @@ import de.decgod.mod.Scene;
 
 public class Game {
 	
-	public int time;
 	public Level level;
-	// NinjadamageMod
 	Player player = new Player(); // FIXME - dirty
-	// NinjadamageMod
 	public int pauseTime;
 		
 	public Menu menu;
@@ -30,10 +27,7 @@ public class Game {
 		Scene.registerComp(level, this, player);
 	}
 
-	public int getTime() {
-		return time;
-	}
-	
+
 	public void newGame() {
 		Level.clear();
 		level = Level.loadLevel(this, "start");
@@ -67,7 +61,6 @@ public class Game {
 			return;
 		}
 
-		time++;
 
 		boolean strafe = keys[KeyEvent.VK_CONTROL] || keys[KeyEvent.VK_ALT]
 				|| keys[KeyEvent.VK_ALT_GRAPH] || keys[KeyEvent.VK_SHIFT];
@@ -118,7 +111,7 @@ public class Game {
 			keys[KeyEvent.VK_D] = false;
 
 			menu.tick(this, up, down, left, right, use);
-		} else {
+		} else if(!player.getBash().isOpen()) {
 			player.tick(up, down, left, right, turnLeft, turnRight);
 			if (use) {
 				player.activate();

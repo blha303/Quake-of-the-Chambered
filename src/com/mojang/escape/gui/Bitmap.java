@@ -1,17 +1,15 @@
 package com.mojang.escape.gui;
 
-import java.util.Random;
-
 import com.mojang.escape.Art;
 
-import de.decgod.mod.OptionsHandler;
+import de.decgod.mod.RuntimeConfiguration;
 
 public class Bitmap {
 
 	public final int width;
 	public final int height;
 	public final int[] pixels;
-	private static final String chars = OptionsHandler.getInstance().getAllowedChars();
+	private static final String chars = RuntimeConfiguration.getInstance().getAllowedChars();
 
 	public Bitmap(int width, int height) {
 		this.width = width;
