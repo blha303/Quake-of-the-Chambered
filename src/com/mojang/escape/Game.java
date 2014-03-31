@@ -14,23 +14,28 @@ import com.mojang.escape.menu.WinMenu;
 
 import de.decgod.mod.Scene;
 
-public class Game {
-	
-	public Level level;
-	Player player = new Player(); // FIXME - dirty
-	public int pauseTime;
-		
-	public Menu menu;
+public class Game
+{
 
-	public Game() {
+	public Level level;
+	public Player player = new Player();
+	public int pauseTime;
+
+	public Menu menu;
+	public int time;
+
+	public Game()
+	{
 		setMenu(new TitleMenu());
 		Scene.registerComp(level, this, player);
 	}
 
-
-	public void newGame() {
+	public void newGame()
+	{
 		Level.clear();
 		level = Level.loadLevel(this, "start");
+		player = new Player();
+		player.setHealth(20);
 		player.level = level;
 		level.player = player;
 		player.x = level.xSpawn;
@@ -39,7 +44,8 @@ public class Game {
 		player.rot = Math.PI + 0.4;
 	}
 
-	public void switchLevel(String name, int id) {
+	public void switchLevel(String name, int id)
+	{
 		pauseTime = 30;
 		level.removeEntityImmediately(player);
 		level = Level.loadLevel(this, name);
@@ -52,18 +58,18 @@ public class Game {
 		level.addEntity(player);
 	}
 
-	
-
-	
-	public void tick(boolean[] keys) {		
-		if (pauseTime > 0) {
+	public void tick(boolean[] keys)
+	{
+		time++;
+		
+		if (pauseTime > 0)
+		{
 			pauseTime--;
+
 			return;
 		}
 
-
-		boolean strafe = keys[KeyEvent.VK_CONTROL] || keys[KeyEvent.VK_ALT]
-				|| keys[KeyEvent.VK_ALT_GRAPH] || keys[KeyEvent.VK_SHIFT];
+		boolean strafe = keys[KeyEvent.VK_CONTROL] || keys[KeyEvent.VK_ALT] || keys[KeyEvent.VK_ALT_GRAPH] || keys[KeyEvent.VK_SHIFT];
 
 		boolean lk = keys[KeyEvent.VK_LEFT] || keys[KeyEvent.VK_NUMPAD4];
 		boolean rk = keys[KeyEvent.VK_RIGHT] || keys[KeyEvent.VK_NUMPAD6];
@@ -80,43 +86,53 @@ public class Game {
 
 		manageItemUse(keys);
 
-		if (keys[130] /* aka cirkumflex */) {
-			if (!player.getBash().isOpen()) {
+		if (keys[130] /* aka cirkumflex */)
+		{
+			if (!player.getBash().isOpen())
+			{
 				player.getBash().setOpen(true);
-			} else if(player.getBash().isOpen()){
-                player.getBash().setOpen(false);
-            }
+			} 
+			else if (player.getBash().isOpen())
+			{
+				player.getBash().setOpen(false);
+			}
 
-            keys[130] = false;
+			keys[130] = false;
 		}
 
-		if (keys[KeyEvent.VK_ESCAPE]) {
+		if (keys[KeyEvent.VK_ESCAPE])
+		{
 			keys[KeyEvent.VK_ESCAPE] = false;
-			if (menu == null) {
+			if (menu == null)
+			{
 				setMenu(new PauseMenu());
 			}
 		}
 
-		if (use) {
+		if (use)
+		{
 			keys[KeyEvent.VK_SPACE] = false;
 		}
 
-		if (menu != null) {
+		if (menu != null)
+		{
 			keys[KeyEvent.VK_W] = keys[KeyEvent.VK_UP] = keys[KeyEvent.VK_NUMPAD8] = false;
 			keys[KeyEvent.VK_S] = keys[KeyEvent.VK_DOWN] = keys[KeyEvent.VK_NUMPAD2] = false;
 			keys[KeyEvent.VK_A] = false;
 			keys[KeyEvent.VK_D] = false;
 
 			menu.tick(this, up, down, left, right, use);
-		} else if(!player.getBash().isOpen()) {
+		} else if (!player.getBash().isOpen())
+		{
 			player.tick(up, down, left, right, turnLeft, turnRight);
-			if (use) {
+			if (use)
+			{
 				player.activate();
 			}
 
 			level.tick();
 		}
-		
+
 		Scene.registerComp(level, this, player);
 	}
 
@@ -128,9 +144,12 @@ public class Game {
 	 * @param keys
 	 *            - Input from the user
 	 */
-	protected void manageItemUse(boolean[] keys) {
-		for (int i = 0; i < 8; i++) {
-			if (keys[KeyEvent.VK_1 + i]) {
+	protected void manageItemUse(boolean[] keys)
+	{
+		for (int i = 0; i < 8; i++)
+		{
+			if (keys[KeyEvent.VK_1 + i])
+			{
 				keys[KeyEvent.VK_1 + i] = false;
 				player.selectedSlot = i;
 				player.itemUseTime = 0;
@@ -140,19 +159,23 @@ public class Game {
 
 	// Ninjadamage
 
-	public void getLoot(Item item) {
+	public void getLoot(Item item)
+	{
 		player.addLoot(item);
 	}
 
-	public void win(Player player) {
+	public void win(Player player)
+	{
 		setMenu(new WinMenu(player));
 	}
 
-	public void setMenu(Menu menu) {
+	public void setMenu(Menu menu)
+	{
 		this.menu = menu;
 	}
 
-	public void lose(Player player) {
+	public void lose(Player player)
+	{
 		setMenu(new LoseMenu(player));
 	}
 }

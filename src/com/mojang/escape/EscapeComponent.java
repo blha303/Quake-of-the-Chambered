@@ -21,6 +21,8 @@ import de.decgod.mod.RuntimeConfiguration;
 public class EscapeComponent extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 
+	// I have speedran this game. 4:54 seconds is my PB.
+	
 	// ninjadamage Mod
 	private final int WIDTH = RuntimeConfiguration.getInstance().getWidth();
 	private final int HEIGHT = RuntimeConfiguration.getInstance().getHeight();

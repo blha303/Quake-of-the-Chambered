@@ -15,7 +15,8 @@ public class Screen extends Bitmap {
 	private static final int PANEL_HEIGHT = 29;
 	private Bitmap testBitmap;
 	private Bitmap3D viewport;
-
+	private int vpxo, vpyo;
+	
 	public Screen(int width, int height) {
 		super(width, height);
 
@@ -63,8 +64,8 @@ public class Screen extends Bitmap {
 				//
 				// }
 				// }
-
-				draw(viewport, 0, 0);
+				
+				draw(viewport, vpxo, vpyo);
 
 				int xx = (int) (Scene.getInstance().getPlayer().turnBob * 32);
 				int yy = (int) (Math
@@ -74,8 +75,9 @@ public class Screen extends Bitmap {
 
 				if (itemUsed)
 					xx = yy = 0;
+				
 				xx += width / 2;
-				yy += height - 15 * 3;
+				yy += height - 15 * 5;
 
 				drawWeapons(itemUsed, item, xx, yy);
 
@@ -88,7 +90,20 @@ public class Screen extends Bitmap {
             draw(EscapeComponent.frames + "", 0,0, 0xFFFFFF);
 
 			drawHud(item);
+			
+			int seconds = game.player.time / 60;
+			int minutes = seconds / 60;
+			
+			seconds %= 60;
+			
+			String timeString = minutes + ":";
+			
+			if (seconds < 10)
+				timeString += "0";
 
+			timeString += seconds;
+			
+			draw(timeString, 0, 4, 0xFFFFFF, 2);
 		}
 
 		if (game.menu != null) {
@@ -191,8 +206,10 @@ public class Screen extends Bitmap {
 	private void drawDeadMessage() {
 		double offs = 1.5 - Scene.getInstance().getPlayer().hurtTime / 30.0;
 		Random random = new Random(111);
+		
 		if (Scene.getInstance().getPlayer().dead)
 			offs = 0.5;
+		
 		for (int i = 0; i < pixels.length; i++) {
 			double xp = ((i % width) - viewport.width / 2.0) / width * 2;
 			double yp = ((i / width) - viewport.height / 2.0) / viewport.height
@@ -209,7 +226,7 @@ public class Screen extends Bitmap {
 //					32 * 2 * item.icon + 1, 32 * 2 + 1 * 2
 //							+ (itemUsed ? 32 * 2 : 0), 30 * 2, 30 * 2);
 //            if (item != Item.none) {
-                scaleDraw(Art.items, 3, xx, yy, 16 * item.icon + 1, 16 + 1 + (itemUsed ? 16 : 0), 15, 15, Art.getCol(item.color));
+                scaleDraw(Art.items, 5, xx, yy, 16 * item.icon + 1, 16 + 1 + (itemUsed ? 16 : 0), 15, 15, Art.getCol(item.color));
 //            }
 		}
 	}
