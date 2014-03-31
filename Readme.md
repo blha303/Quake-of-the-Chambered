@@ -1,25 +1,16 @@
-Note: This was a project I worked for fun at the beginning of my job; The source quality is bad and not comparable with my current skillsanymore. I uploaded it to github because I'd be a shame if it got lost.
+# Quake of the Chambered
 
-# Decay of the Goddess
+I have been a large fan of Markus (Notch) Persson's Prelude of the Chambered rendering engine, and I've always loved tinkering around with it to make it do new things, as well as optimise the code. Well, this time I've decided to make a "serious" project out of it.
 
-This mod is based on the game "Prelude of the Chambered" which was developed by Notch within 48 hours for the ludum Dare contest.
+My initial plan for this project is to create a networked, fast-paced, and overall more hardcore version of Markus Persson's original game/engine.
 
-## Features
+Development has just now started, and I plan on updating the project as time goes on. 
 
-| Feature | Description |
-| ------------- | ------------- | ----- |
-| Shell | An in game bash which lets the player communicate with the game. |
-| Mouse support | Move the camera around the x-axis or use it to navigate through the menu. |
-| Config-file | a file which contains parameters like resolution, mouse speed, etc. |
-| Added an item (med kit) | Just a test to get to know how the game handles it. |
-| Increased texture size | . |
-| Increased color palette | . |
-| Completely HUD removal | . |
-| Fullscreen support! | (Software rendered) |
+All credit goes to benjaminfoo for writing the original code for 'Decay of the Goddess', which is a mod of the Prelude of the Chambered engine that allows for such things like bash support and mouselook.
 
+Anyway, time to start crackin' :D
 
-This page will be replaced in the future. It shows the current list of features I've worked out so far.
-If you've got any questions, wishes or proposals - write me a mail, a pm, via icq, twitter or a nice comment :)
+This README file should update over time.
 
-TODO:
-- Experience points ! :) ?
+// Jeviny
+
