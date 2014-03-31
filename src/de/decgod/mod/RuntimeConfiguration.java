@@ -34,6 +34,9 @@ public class RuntimeConfiguration {
 	/** playername */
 	private String playername;
 
+	/** fov */
+	private int fov = 130;
+	
 	/** scaled Screen size */
 	private Dimension screen;
 
@@ -60,6 +63,7 @@ public class RuntimeConfiguration {
 		scalefactor = Integer.parseInt(Messages.getString("scalefactor"));
 		mousespeed = Double.parseDouble(Messages.getString("mousespeed"));
 		playername = Messages.getString("playername");
+		fov = Integer.parseInt(Messages.getString("fov"));
 		screen = new Dimension(width * scalefactor, height * scalefactor);
 		frame = EscapeComponent.frameOut;
 		allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ.,!?\"'/\\<>()[]{}abcdefghijklmnopqrstuvwxyz_               0123456789+-=*:;����";
@@ -67,6 +71,7 @@ public class RuntimeConfiguration {
 		scaled_height = height * scalefactor;
 		screen_size = width * height;
 		screen_size_scaled = scaled_width * scaled_height;
+		
         this.theme = new Theme();
 	}
 
@@ -159,6 +164,16 @@ public class RuntimeConfiguration {
 
     public void setScreen_size_scaled(int screen_size_scaled) {
         this.screen_size_scaled = screen_size_scaled;
+    }
+    
+    public int getFov()
+    {
+    	return fov;
+    }
+    
+    public void setFov(int fov)
+    {
+    	this.fov = fov;
     }
 
     public JFrame getFrame() {

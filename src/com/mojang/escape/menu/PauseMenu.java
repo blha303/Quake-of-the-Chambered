@@ -13,7 +13,7 @@ public class PauseMenu extends Menu {
 
 	@Override
 	public void render(Bitmap target) {
-		target.draw(Art.logo, 0, 8, 0, 0, RuntimeConfiguration.getInstance().getWidth(), 36, Art.getCol(RuntimeConfiguration.getInstance().getTheme().white));
+		//target.draw(Art.logo, 0, 8, 0, 0, RuntimeConfiguration.getInstance().getWidth(), 36, Art.getCol(RuntimeConfiguration.getInstance().getTheme().white));
 
 		for (int i = 0; i < options.length; i++) {
 			String msg = options[i];
