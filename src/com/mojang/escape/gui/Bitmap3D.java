@@ -67,34 +67,67 @@ public class Bitmap3D extends Bitmap
 					
 					if (e.solidRender)
 					{
-						renderWall(xb + openness, zb + 0.5 - rr, xb, zb + 0.5 - rr, c.tex, (c.col & 0xfefefe) >> 1, 0, openness);
-						renderWall(xb, zb + 0.5 + rr, xb + openness, zb + 0.5 + rr, c.tex, (c.col & 0xfefefe) >> 1, openness, 0);
-						renderWall(xb + openness, zb + 0.5 + rr, xb + openness, zb + 0.5 - rr, c.tex, c.col, 0.5 - rr, 0.5 + rr);
+						renderWall(xb + openness, zb + 0.5 - rr, xb, zb + 0.5 - rr, c.tex, (c.col & 0xfefefe) >> 1, 0, openness, 0);
+						renderWall(xb, zb + 0.5 + rr, xb + openness, zb + 0.5 + rr, c.tex, (c.col & 0xfefefe) >> 1, openness, 0, 0);
+						renderWall(xb + openness, zb + 0.5 + rr, xb + openness, zb + 0.5 - rr, c.tex, c.col, 0.5 - rr, 0.5 + rr, 0);
+						
+						if (e.ceilTex >= 0)
+						{
+							renderWall(xb + openness, zb + 0.5 - rr, xb, zb + 0.5 - rr, c.tex, (c.col & 0xfefefe) >> 1, 0, openness, 1);
+							renderWall(xb, zb + 0.5 + rr, xb + openness, zb + 0.5 + rr, c.tex, (c.col & 0xfefefe) >> 1, openness, 0, 1);
+							renderWall(xb + openness, zb + 0.5 + rr, xb + openness, zb + 0.5 - rr, c.tex, c.col, 0.5 - rr, 0.5 + rr, 1);
+						}
 					}
 					else
 					{
-						renderWall(xb + 0.5 - rr, zb, xb + 0.5 - rr, zb + openness, c.tex, c.col, openness, 0);
-						renderWall(xb + 0.5 + rr, zb + openness, xb + 0.5 + rr, zb, c.tex, c.col, 0, openness);
-						renderWall(xb + 0.5 - rr, zb + openness, xb + 0.5 + rr, zb + openness, c.tex, (c.col & 0xfefefe) >> 1, 0.5 - rr, 0.5 + rr);
+						renderWall(xb + 0.5 - rr, zb, xb + 0.5 - rr, zb + openness, c.tex, c.col, openness, 0, 0);
+						renderWall(xb + 0.5 + rr, zb + openness, xb + 0.5 + rr, zb, c.tex, c.col, 0, openness, 0);
+						renderWall(xb + 0.5 - rr, zb + openness, xb + 0.5 + rr, zb + openness, c.tex, (c.col & 0xfefefe) >> 1, 0.5 - rr, 0.5 + rr, 0);
+						
+						if (e.ceilTex >= 0)
+						{
+							renderWall(xb + 0.5 - rr, zb, xb + 0.5 - rr, zb + openness, c.tex, c.col, openness, 0, 0);
+							renderWall(xb + 0.5 + rr, zb + openness, xb + 0.5 + rr, zb, c.tex, c.col, 0, openness, 0);
+							renderWall(xb + 0.5 - rr, zb + openness, xb + 0.5 + rr, zb + openness, c.tex, (c.col & 0xfefefe) >> 1, 0.5 - rr, 0.5 + rr, 0);
+						}
 					}
-
 				}
 
 				if (c.solidRender)
 				{
 					if (!e.solidRender)
-						renderWall(xb + 1, zb + 1, xb + 1, zb, c.tex, c.col);
+					{
+						renderWall(xb + 1, zb + 1, xb + 1, zb, c.tex, c.col, 0);
+
+						if (e.ceilTex >= 0)
+							renderWall(xb + 1, zb + 1, xb + 1, zb, c.tex, c.col, 1);
+					}
 		
 					if (!s.solidRender)
-						renderWall(xb, zb + 1, xb + 1, zb + 1, c.tex, (c.col & 0xfefefe) >> 1);
+					{
+						renderWall(xb, zb + 1, xb + 1, zb + 1, c.tex, (c.col & 0xfefefe) >> 1, 0);
+						
+						if (s.ceilTex >= 0)
+							renderWall(xb, zb + 1, xb + 1, zb + 1, c.tex, (c.col & 0xfefefe) >> 1, 1);
+					}
 				}
 				else
 				{
 					if (e.solidRender)
-						renderWall(xb + 1, zb, xb + 1, zb + 1, e.tex, e.col);
+					{
+						renderWall(xb + 1, zb, xb + 1, zb + 1, e.tex, e.col, 0);
+						
+						if (e.ceilTex >= 0)
+							renderWall(xb + 1, zb, xb + 1, zb + 1, e.tex, e.col, 1);
+					}
 					
 					if (s.solidRender)
-						renderWall(xb + 1, zb + 1, xb, zb + 1, s.tex, (s.col & 0xfefefe) >> 1);
+					{
+						renderWall(xb + 1, zb + 1, xb, zb + 1, s.tex, (s.col & 0xfefefe) >> 1, 0);
+					
+					    if (s.ceilTex >= 0)
+					    	renderWall(xb + 1, zb + 1, xb, zb + 1, s.tex, (s.col & 0xfefefe) >> 1, 1);
+					}
 				}
 			}
 		}
@@ -140,7 +173,7 @@ public class Bitmap3D extends Bitmap
 			{
 				floor = false;
 				
-				zd = (4 + zCam * 8) / -yd;
+				zd = (12 + zCam * 8) / -yd;
 			}
 
 			for (int x = 0; x < width; x++)
@@ -253,27 +286,27 @@ public class Bitmap3D extends Bitmap
 
 	}
 
-	private void renderWall(double x0, double y0, double x1, double y1, int tex, int color)
+	private void renderWall(double x0, double y0, double x1, double y1, int tex, int color, double yh)
 	{
-		renderWall(x0, y0, x1, y1, tex, color, 0, 1);
+		renderWall(x0, y0, x1, y1, tex, color, 0, 1, yh);
 	}
 
-	private void renderWall(double x0, double y0, double x1, double y1, int tex, int color, double xt0, double xt1)
+	private void renderWall(double x0, double y0, double x1, double y1, int tex, int color, double xt0, double xt1, double yh)
 	{
-		double xc0 = ((x0 - 0.5) - xCam) * 2;
-		double yc0 = ((y0 - 0.5) - yCam) * 2;
+		double xC = (((x0 - 0.5) - xCam) * 2);
+		double yC = (((y0 - 0.5) - yCam) * 2);
 
-		double xx0 = xc0 * rCos - yc0 * rSin;
-		double u0 = ((-0.5) - zCam) * 2;
-		double l0 = ((+0.5) - zCam) * 2;
-		double zz0 = yc0 * rCos + xc0 * rSin;
+		double xx0 = xC * rCos - yC * rSin;
+		double ulo = ((-0.5 -yh) - zCam) * 2;
+		double llo = ((+0.5 - yh) - zCam) * 2;
+		double zz0 = yC * rCos + xC * rSin;
 
 		double xc1 = ((x1 - 0.5) - xCam) * 2;
 		double yc1 = ((y1 - 0.5) - yCam) * 2;
 
 		double xx1 = xc1 * rCos - yc1 * rSin;
-		double u1 = ((-0.5) - zCam) * 2;
-		double l1 = ((+0.5) - zCam) * 2;
+		double u1 = ((-0.5 - yh) - zCam) * 2;
+		double l1 = ((+0.5 - yh) - zCam) * 2;
 		double zz1 = yc1 * rCos + xc1 * rSin;
 
 		xt0 *= 16;
@@ -317,8 +350,8 @@ public class Bitmap3D extends Bitmap
 		if (xp1 > width)
 			xp1 = width;
 
-		double yPixel00 = (u0 / zz0 * fov + yCenter);
-		double yPixel01 = (l0 / zz0 * fov + yCenter);
+		double yPixel00 = (ulo / zz0 * fov + yCenter);
+		double yPixel01 = (llo / zz0 * fov + yCenter);
 		double yPixel10 = (u1 / zz1 * fov + yCenter);
 		double yPixel11 = (l1 / zz1 * fov + yCenter);
 

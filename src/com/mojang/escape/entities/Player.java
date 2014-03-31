@@ -58,10 +58,13 @@ public class Player extends Entity
 	public Player()
 	{
 		r = 0.3;
+		
 		for (int i = 0; i < items.length; i++)
-		{
 			items[i] = Item.none;
-		}
+		
+		items[1] = Item.pistol;
+		
+		ammo = 20;
 	}
 
 	public void turnLeft(double variation)
@@ -172,19 +175,23 @@ public class Player extends Entity
 			
 			rot += 0.0150;
 		}
-	
+		
 		if (fh > y)
 		{
 			y += (fh - y) * 0.2;
+			
 			ya = 0;
 		}
 		else
 		{
 			ya -= 0.01;
+			
 			y += ya;
+			
 			if (y < fh)
 			{
 				y = fh;
+				
 				ya = 0;
 			}
 		}
@@ -437,7 +444,9 @@ public class Player extends Entity
 		if (health <= 0)
 		{
 			health = 0;
+			
 			Sound.death.play();
+			
 			dead = true;
 		}
 
@@ -446,8 +455,10 @@ public class Player extends Entity
 		double xd = enemy.x - x;
 		double zd = enemy.z - z;
 		double dd = Math.sqrt(xd * xd + zd * zd);
+		
 		xa -= xd / dd * 0.1;
 		za -= zd / dd * 0.1;
+		
 		rota += (random.nextDouble() - 0.5) * 0.2;
 	}
 
@@ -457,12 +468,13 @@ public class Player extends Entity
 		if (entity instanceof Bullet)
 		{
 			Bullet bullet = (Bullet) entity;
+			
 			if (bullet.owner.getClass() == this.getClass())
-			{
 				return;
-			}
+			
 			if (hurtTime > 0)
 				return;
+			
 			entity.remove();
 			hurt(entity, 1);
 		}

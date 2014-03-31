@@ -78,11 +78,12 @@ public class Block
 
 	public void decorate(Level level, int x, int y)
 	{
+		
 	}
 
 	public double getFloorHeight(Entity e)
 	{
-		return 0;
+		return 0.20;
 	}
 
 	public double getWalkSpeed(Player player)
@@ -92,7 +93,7 @@ public class Block
 
 	public double getFriction(Player player)
 	{
-		return 0.7;
+		return 0.775;
 	}
 
 	public void trigger(boolean pressed)

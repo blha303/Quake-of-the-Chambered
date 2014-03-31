@@ -33,7 +33,7 @@ public class Game
 	public void newGame()
 	{
 		Level.clear();
-		level = Level.loadLevel(this, "start");
+		level = Level.loadLevel(this, "select");
 		player = new Player();
 		player.setHealth(20);
 		player.level = level;
