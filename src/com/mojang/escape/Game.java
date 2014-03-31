@@ -18,7 +18,7 @@ public class Game
 {
 
 	public Level level;
-	public Player player = new Player();
+	public static Player player = new Player();
 	public int pauseTime;
 
 	public Menu menu;

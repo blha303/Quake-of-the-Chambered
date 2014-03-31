@@ -7,6 +7,7 @@ import java.util.List;
 import com.mojang.escape.Sound;
 import com.mojang.escape.level.block.Block;
 import com.mojang.escape.level.block.IceBlock;
+import com.mojang.escape.level.block.LavaBlock;
 import com.mojang.escape.level.block.WaterBlock;
 
 import de.decgod.bash.Bash;
@@ -166,7 +167,13 @@ public class Player extends Entity
 		
 		if (onBlock instanceof WaterBlock && !(lastBlock instanceof WaterBlock))
 			Sound.splash.play();
-
+		
+		if (onBlock instanceof LavaBlock && !(lastBlock instanceof LavaBlock))
+			Sound.splash.play();
+			
+		if (onBlock instanceof LavaBlock)
+			hurt(new OgreEntity(0, 0), 1);
+		
 		lastBlock = onBlock;
 
 		if (dead)
@@ -244,7 +251,8 @@ public class Player extends Entity
 				else
 					xa = -0.08;
 				z += (((int) (z + 0.5)) - z) * 0.2;
-			} else if (xa * xa < za * za)
+			}
+			else if (xa * xa < za * za)
 			{
 				sliding = true;
 				xa = 0;
@@ -253,16 +261,15 @@ public class Player extends Entity
 				else
 					za = -0.08;
 				x += (((int) (x + 0.5)) - x) * 0.2;
-			} else
+			} 
+			else
 			{
 				xa -= (xm * Math.cos(rot) + zm * Math.sin(rot)) * 0.1;
 				za -= (zm * Math.cos(rot) - xm * Math.sin(rot)) * 0.1;
 			}
 
 			if (!wasSliding && sliding)
-			{
 				Sound.slide.play();
-			}
 		} else
 		{
 			xa -= (xm * Math.cos(rot) + zm * Math.sin(rot)) * walkSpeed;
@@ -295,7 +302,9 @@ public class Player extends Entity
 			{
 				Sound.shoot.play();
 				itemUseTime = 10;
+				
 				level.addEntity(new Bullet(this, x, z, rot, 1, 0, 0xffffff));
+				
 				ammo--;
 			}
 			return;
@@ -321,8 +330,10 @@ public class Player extends Entity
 				Sound.potion.play();
 				itemUseTime = 20;
 				health += 15;
+				
 				if (health > 20)
 					health = 20;
+				
 				medikits--;
 			}
 			return;
@@ -341,7 +352,9 @@ public class Player extends Entity
 		int rr = 3;
 		int xc = (int) (x + 0.5);
 		int zc = (int) (z + 0.5);
+		
 		List<Entity> possibleHits = new ArrayList<Entity>();
+		
 		for (int z = zc - rr; z <= zc + rr; z++)
 		{
 			for (int x = xc - rr; x <= xc + rr; x++)
@@ -405,10 +418,13 @@ public class Player extends Entity
 	{
 		if (item == Item.pistol)
 			ammo += 20;
+		
 		if (item == Item.potion)
 			potions += 1;
+		
 		if (item == Item.medikit)
 			medikits += 1;
+		
 		for (int i = 0; i < items.length; i++)
 		{
 			if (items[i] == item)
@@ -420,17 +436,19 @@ public class Player extends Entity
 		}
 
 		for (int i = 0; i < items.length; i++)
-		{
 			if (items[i] == Item.none)
 			{
 				items[i] = item;
+				
 				selectedSlot = i;
+				
 				itemUseTime = 0;
+				
 				if (level != null)
 					level.showLootScreen(item);
+				
 				return;
 			}
-		}
 	}
 
 	public void hurt(Entity enemy, int dmg)

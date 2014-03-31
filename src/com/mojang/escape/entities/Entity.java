@@ -39,6 +39,7 @@ public class Entity {
 	public final void updatePos() {
 		int xTile = (int) (x + 0.5);
 		int zTile = (int) (z + 0.5);
+		
 		if (xTile != xTileO || zTile != zTileO) {
 			level.getBlock(xTileO, zTileO).removeEntity(this);
 

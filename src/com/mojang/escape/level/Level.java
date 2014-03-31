@@ -32,6 +32,7 @@ import com.mojang.escape.level.block.DoorBlock;
 import com.mojang.escape.level.block.FinalUnlockBlock;
 import com.mojang.escape.level.block.IceBlock;
 import com.mojang.escape.level.block.LadderBlock;
+import com.mojang.escape.level.block.LavaBlock;
 import com.mojang.escape.level.block.LockedDoorBlock;
 import com.mojang.escape.level.block.LootBlock;
 import com.mojang.escape.level.block.PitBlock;
@@ -57,8 +58,8 @@ public abstract class Level
 	public int ySpawn;
 
 	protected int wallCol = 0x9B6D47;
-	protected int floorCol = 0x594736;
-	protected int ceilCol = 0x545454;
+	protected int floorCol = 0x5B4736;
+	protected int ceilCol = 0x5B4736;
 
 	protected int wallTex = 0;
 	protected int floorTex = 0;
@@ -265,7 +266,9 @@ public abstract class Level
 			return new FinalUnlockBlock();
 		if (col == 0x000056)
 			return new WinBlock();
-
+		if (col == 0xFF6D02)
+			return new LavaBlock();
+		
 		return new Block();
 	}
 

@@ -23,10 +23,11 @@ public class Screen extends Bitmap {
 		viewport = new Bitmap3D(width, height);
 
 		Random random = new Random();
+		
 		testBitmap = new Bitmap(64, 64);
-		for (int i = 0; i < 64 * 64; i++) {
+		
+		for (int i = 0; i < 64 * 64; i++)
 			testBitmap.pixels[i] = random.nextInt() * (random.nextInt(5) / 4);
-		}
 	}
 
 	public void render(Game game, boolean hasFocus) {
@@ -160,6 +161,8 @@ public class Screen extends Bitmap {
 		draw("H:", 3, height - 26 + 16, 0xff0000);
 		draw("" + Scene.getInstance().getPlayer().health, 16, height - 26 + 16,
 				0xffffff);
+		
+		scaleDraw(Art.playerhud, 2, 16, height - 48, 0, 0, 16, 16, Art.getCol(0xFF00FF));
 
 		// draws items in hud
 		// for (int i = 0; i < 8; i++) {
@@ -198,9 +201,8 @@ public class Screen extends Bitmap {
 		if (Scene.getInstance().getPlayer().getBash().isOpen()) {
 			Scene.getInstance().getPlayer().getBash().log(this);
 		}
-
+		
 		InGameLogger.getInstance().log(this);
-
 	}
 
 	private void drawDeadMessage() {

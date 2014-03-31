@@ -144,6 +144,7 @@ public class Bitmap3D extends Bitmap
 					for (int i = 0; i < e.sprites.size(); i++)
 					{
 						Sprite sprite = e.sprites.get(i);
+						
 						renderSprite(e.x + sprite.x, 0 - sprite.y, e.z + sprite.z, sprite.tex, sprite.col);
 					}
 				}
@@ -151,6 +152,7 @@ public class Bitmap3D extends Bitmap
 				for (int i = 0; i < c.sprites.size(); i++)
 				{
 					Sprite sprite = c.sprites.get(i);
+					
 					renderSprite(xb + sprite.x, 0 - sprite.y, zb + sprite.z, sprite.tex, sprite.col);
 				}
 			}
@@ -203,9 +205,7 @@ public class Bitmap3D extends Bitmap
 				}
 
 				if (tex < 0)
-				{
 					zBuffer[x + y * width] = -1;
-				} 
 				else
 				{
 					zBuffer[x + y * width] = zd;
@@ -415,7 +415,8 @@ public class Bitmap3D extends Bitmap
 				int yy = i / width;
 
 				pixels[i] = Art.sky.pixels[xx + (yy / 2) * 512] * 0x444455;
-			} else
+			} 
+			else
 			{
 				int xp = (i % width);
 				int yp = (i / width) * 14;

@@ -6,11 +6,11 @@ import com.mojang.escape.entities.Entity;
 import com.mojang.escape.entities.Item;
 import com.mojang.escape.entities.Player;
 
-public class WaterBlock extends Block
+public class LavaBlock extends Block
 {
 	int steps = 0;
 
-	public WaterBlock()
+	public LavaBlock()
 	{
 		blocksMotion = true;
 	}
@@ -25,9 +25,7 @@ public class WaterBlock extends Block
 		if (steps <= 0)
 		{
 			floorTex = 8 + random.nextInt(3);
-
-			floorCol = Art.getCol(0x0000ff);
-
+			floorCol = Art.getCol(0xff3300);
 			steps = 16;
 		}
 	}
@@ -37,22 +35,22 @@ public class WaterBlock extends Block
 	{
 		if (entity instanceof Player)
 			return false;
-
+		
 		if (entity instanceof Bullet)
 			return false;
-
+		
 		return blocksMotion;
 	}
 
 	@Override
 	public double getFloorHeight(Entity e)
 	{
-		return -0.5;
+		return -0.15;
 	}
 
 	@Override
 	public double getWalkSpeed(Player player)
 	{
-		return 0.4;
+		return 1.0;
 	}
 }
