@@ -17,7 +17,7 @@ public class Block
 	public boolean blocksMotion = false;
 	public boolean solidRender = false;
 
-	public String[] messages;
+	public String[] messages = {  };
 
 	public static Block solidWall = new SolidBlock();
 
@@ -93,7 +93,7 @@ public class Block
 
 	public double getFriction(Player player)
 	{
-		return 0.775;
+		return 0.8;
 	}
 
 	public void trigger(boolean pressed)

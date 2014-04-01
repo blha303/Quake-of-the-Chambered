@@ -47,12 +47,12 @@ public class WaterBlock extends Block
 	@Override
 	public double getFloorHeight(Entity e)
 	{
-		return -0.5;
+		return -0.4;
 	}
 
 	@Override
 	public double getWalkSpeed(Player player)
 	{
-		return 0.7;
+		return 0.5;
 	}
 }

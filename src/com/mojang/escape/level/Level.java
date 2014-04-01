@@ -218,6 +218,46 @@ public abstract class Level
 			block.addSprite(new Sprite(0, 0, 0, 7, Art.getCol(0xE6D8BE)));
 			
 			break;
+		case 0xE1A186:
+			block.col = Art.getCol(0x000000);
+			block.solidRender = true;
+			block.blocksMotion = true;
+			
+			break;
+		case 0xF982AE:
+			block.messages = new String[1];
+			block.messages[0] = "THIS HALL SELECTS EASY SKILL.";
+			
+			break;
+		case 0xF982FF:
+			block.messages = new String[1];
+			block.messages[0] = "THIS HALL SELECTS NORMAL SKILL.";
+			
+			break;
+		case 0xFF82FF:
+			block.messages = new String[2];
+			block.messages[0] = "THIS HALL SELECTS HARD SKLL.";
+			block.messages[1] = "BE PREPARED.";
+			
+			break;
+		case 0xFFB27F:
+			block.messages = new String[1];
+			block.messages[0] = "SELECT YOUR DIFFICULTY.";
+			
+			break;
+		case 0xFFD8BE:
+			block.addSprite(new Sprite(0, 0, 0, 15, Art.getCol(0xE6D8BE)));
+			
+			break;
+		case 0x33FFFF:
+			block.floorTex = 4;
+			block.floorCol = Art.getCol(0xFF3232);
+			
+			break;
+		case 0x611000:
+			block.ceilTex = -1;
+			
+			break;
 		}
 	}
 
@@ -267,7 +307,7 @@ public abstract class Level
 			return new FinalUnlockBlock();
 		if (col == 0x000056)
 			return new WinBlock();
-		if (col == 0xFF6D02)
+		if (col == 0xFF6D02 || col == 0x611000)
 			return new LavaBlock();
 		if (col == 0xF939AE)
 			return new StarBlock();
@@ -278,9 +318,8 @@ public abstract class Level
 	public Block getBlock(int x, int y)
 	{
 		if (x < 0 || y < 0 || x >= width || y >= height)
-		{
 			return solidWall;
-		}
+		
 		return blocks[x + y * width];
 	}
 
@@ -302,7 +341,9 @@ public abstract class Level
 
 			int w = img.getWidth();
 			int h = img.getHeight();
+			
 			int[] pixels = new int[w * h];
+			
 			img.getRGB(0, 0, w, h, pixels, 0, w);
 
 			Level level = Level.byName(name);
@@ -310,7 +351,8 @@ public abstract class Level
 			loaded.put(name, level);
 
 			return level;
-		} catch (Exception e)
+		}
+		catch (Exception e)
 		{
 			throw new RuntimeException(e);
 		}
@@ -321,8 +363,10 @@ public abstract class Level
 		try
 		{
 			name = name.substring(0, 1).toUpperCase() + name.substring(1);
+			
 			return (Level) Class.forName("com.mojang.escape.level." + name + "Level").newInstance();
-		} catch (Exception e)
+		}
+		catch (Exception e)
 		{
 			throw new RuntimeException(e);
 		}
@@ -418,6 +462,7 @@ public abstract class Level
 			for (int x = 0; x < width; x++)
 			{
 				Block b = blocks[x + y * width];
+				
 				if (b.id == id && b instanceof LadderBlock)
 				{
 					xSpawn = x;

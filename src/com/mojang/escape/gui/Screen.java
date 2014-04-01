@@ -6,41 +6,47 @@ import com.mojang.escape.Art;
 import com.mojang.escape.EscapeComponent;
 import com.mojang.escape.Game;
 import com.mojang.escape.entities.Item;
+import com.mojang.escape.level.block.Block;
 
 import de.decgod.mod.InGameLogger;
 import de.decgod.mod.Scene;
 
-public class Screen extends Bitmap {
+public class Screen extends Bitmap
+{
 
 	private static final int PANEL_HEIGHT = 29;
 	private Bitmap testBitmap;
 	private Bitmap3D viewport;
 	private int vpxo, vpyo;
-	
-	public Screen(int width, int height) {
+
+	public Screen(int width, int height)
+	{
 		super(width, height);
 
 		viewport = new Bitmap3D(width, height);
 
 		Random random = new Random();
-		
+
 		testBitmap = new Bitmap(64, 64);
-		
+
 		for (int i = 0; i < 64 * 64; i++)
 			testBitmap.pixels[i] = random.nextInt() * (random.nextInt(5) / 4);
 	}
 
-	public void render(Game game, boolean hasFocus) {
-		if (game.level == null) {
+	public void render(Game game, boolean hasFocus)
+	{
+		if (game.level == null)
+		{
 			fill(0, 0, width, height, 0);
-		} else {
+		} else
+		{
 			boolean itemUsed = Scene.getInstance().getPlayer().itemUseTime > 0;
-			Item item = Scene.getInstance().getPlayer().items[Scene
-					.getInstance().getPlayer().selectedSlot];
+			Item item = Scene.getInstance().getPlayer().items[Scene.getInstance().getPlayer().selectedSlot];
 
-			if (game.pauseTime > 0) {
+			if (game.pauseTime > 0)
 				drawLevelSwitch(game);
-			} else {
+			else
+			{
 
 				// renders the viewport
 				viewport.render(game);
@@ -48,61 +54,51 @@ public class Screen extends Bitmap {
 				// renders the postProcessing-layer
 				viewport.postProcess(game.level);
 
-				// Block block = game.level.getBlock((int)
-				// (Scene.getInstance().getPlayer().x + 0.5),(int)
-				// (Scene.getInstance().getPlayer().z + 0.5));
+				Block block = game.level.getBlock((int) (Scene.getInstance().getPlayer().x + 0.5), (int) (Scene.getInstance().getPlayer().z + 0.5));
 
-				// if (block.messages != null && hasFocus) {
-				// for (int y = 0; y < block.messages.length; y++) {
-				// viewport.draw(block.messages[y],
-				// (width - block.messages[y].length() * 6) / 2,
-				// (viewport.height - block.messages.length * 8)
-				// / 2 + y * 8 + 1, 0x111111);
-				// viewport.draw(block.messages[y],
-				// (width - block.messages[y].length() * 6) / 2,
-				// (viewport.height - block.messages.length * 8)
-				// / 2 + y * 8, 0x555544);
-				//
-				// }
-				// }
-				
+				if (block.messages != null && hasFocus)
+				{
+					for (int y = 0; y < block.messages.length; y++)
+					{
+						viewport.draw(block.messages[y], (width - block.messages[y].length() * 6) / 2, (viewport.height - block.messages.length * 8) / 2 + y * 8 + 1, 0x111111);
+						viewport.draw(block.messages[y], (width - block.messages[y].length() * 6) / 2, (viewport.height - block.messages.length * 8) / 2 + y * 8, 0x555544);
+
+					}
+				}
+
 				draw(viewport, vpxo, vpyo);
 
 				int xx = (int) (Scene.getInstance().getPlayer().turnBob * 32);
-				int yy = (int) (Math
-						.sin(Scene.getInstance().getPlayer().bobPhase * 0.1)
-						* 1 * Scene.getInstance().getPlayer().bob + Scene
-						.getInstance().getPlayer().bob * 2);
+				int yy = (int) (Math.sin(Scene.getInstance().getPlayer().bobPhase * 0.1) * 1 * Scene.getInstance().getPlayer().bob + Scene.getInstance().getPlayer().bob * 2);
 
 				if (itemUsed)
 					xx = yy = 0;
-				
+
 				xx += width / 2;
 				yy += height - 15 * 5;
 
 				drawWeapons(itemUsed, item, xx, yy);
 
-				if (Scene.getInstance().getPlayer().hurtTime > 0 || Scene.getInstance().getPlayer().dead) {
+				if (Scene.getInstance().getPlayer().hurtTime > 0 || Scene.getInstance().getPlayer().dead)
 					drawDeadMessage();
-				}
 			}
 
-            draw(EscapeComponent.frames + "", 0,0, 0xFFFFFF);
+			draw(EscapeComponent.frames + "", 0, 0, 0xFFFFFF);
 
 			drawHud(item);
-			
+
 			int seconds = game.player.time / 60;
 			int minutes = seconds / 60;
-			
+
 			seconds %= 60;
-			
+
 			String timeString = minutes + ":";
-			
+
 			if (seconds < 10)
 				timeString += "0";
 
 			timeString += seconds;
-			
+
 			draw(timeString, 0, 4, 0xFFFFFF, 2);
 		}
 
@@ -113,52 +109,56 @@ public class Screen extends Bitmap {
 			drawNotFocused();
 	}
 
-	private void drawLevelSwitch(Game game) {
+	private void drawLevelSwitch(Game game)
+	{
 		fill(0, 0, width, height, 0);
+		
 		String[] messages = { "Entering " + game.level.name, };
-		for (int y = 0; y < messages.length; y++) {
-			draw(messages[y], (width - messages[y].length() * 6) / 2,
-					(viewport.height - messages.length * 8) / 2 + y * 8 + 1,
-					0x111111);
-			draw(messages[y], (width - messages[y].length() * 6) / 2,
-					(viewport.height - messages.length * 8) / 2 + y * 8,
-					0x555544);
+		
+		for (int y = 0; y < messages.length; y++)
+		{
+			draw(messages[y], (width - messages[y].length() * 6) / 2, (viewport.height - messages.length * 8) / 2 + y * 8 + 1, Art.getCol(0x000000));
+			draw(messages[y], (width - messages[y].length() * 6) / 2, (viewport.height - messages.length * 8) / 2 + y * 8, Art.getCol(0xFFFFFF));
 		}
 	}
 
-	private void drawMenu(Game game) {
-		for (int i = 0; i < pixels.length; i++) {
+	private void drawMenu(Game game)
+	{
+		for (int i = 0; i < pixels.length; i++)
 			pixels[i] = (pixels[i] & 0xfcfcfc) >> 2;
-		}
+		
 		game.menu.render(this);
 	}
 
-	private void drawNotFocused() {
-		for (int i = 0; i < pixels.length; i++) {
+	private void drawNotFocused()
+	{
+		for (int i = 0; i < pixels.length; i++)
+		{
 			pixels[i] = (pixels[i] & 0xfcfcfc) >> 2;
 		}
-		if (System.currentTimeMillis() / 450 % 2 != 0) {
+		if (System.currentTimeMillis() / 450 % 2 != 0)
+		{
 			String msg = "Click to focus!";
 			draw(msg, (width - msg.length() * 6) / 2, height / 3 + 4, 0xffffff);
 		}
 	}
 
-	private void drawHud(Item item) {
+	private void drawHud(Item item)
+	{
 		// draws the panel, hud background
 		// draw(Art.panel, 0, height - PANEL_HEIGHT, 0, 0, width,PANEL_HEIGHT,
 		// Art.getCol(0x707070));
 
 		// draws special characters such as keys, hearts, etc. and the amount of
 		// it
-//		draw("K:", 3, height - 26 + 0, 0x00ffff, 1);
-//		draw("" + Scene.getInstance().getPlayer().keys, 10, height - 26 + 0, 0xffffff);
+		// draw("K:", 3, height - 26 + 0, 0x00ffff, 1);
+		// draw("" + Scene.getInstance().getPlayer().keys, 10, height - 26 + 0,
+		// 0xffffff);
 		draw("G:", (Art.playerhud.width * 3) + 8, height - 26 + 8, 0xffff00);
-		draw("" + Scene.getInstance().getPlayer().gold, 16, height - 26 + 8,
-				0xffffff);
+		draw("" + Scene.getInstance().getPlayer().gold, 16, height - 26 + 8, 0xffffff);
 		draw("H:", (Art.playerhud.width * 3) + 8, height - 26 + 16, 0xff0000);
-		draw("" + Scene.getInstance().getPlayer().health, 16, height - 26 + 16,
-				0xffffff);
-		
+		draw("" + Scene.getInstance().getPlayer().health, 16, height - 26 + 16, 0xffffff);
+
 		scaleDraw(Art.playerhud, 3, 0, height - Art.playerhud.height * 3, 0, 0, 16, 16, Art.getCol(0x6B5237));
 
 		// draws items in hud
@@ -195,38 +195,42 @@ public class Screen extends Bitmap {
 		// 9, 0xffffff);
 
 		// Ninjadamage checks if bash is open, if
-		if (Scene.getInstance().getPlayer().getBash().isOpen()) {
+		if (Scene.getInstance().getPlayer().getBash().isOpen())
+		{
 			Scene.getInstance().getPlayer().getBash().log(this);
 		}
-		
+
 		InGameLogger.getInstance().log(this);
 	}
 
-	private void drawDeadMessage() {
+	private void drawDeadMessage()
+	{
 		double offs = 1.5 - Scene.getInstance().getPlayer().hurtTime / 30.0;
 		Random random = new Random(111);
-		
+
 		if (Scene.getInstance().getPlayer().dead)
 			offs = 0.5;
-		
-		for (int i = 0; i < pixels.length; i++) {
+
+		for (int i = 0; i < pixels.length; i++)
+		{
 			double xp = ((i % width) - viewport.width / 2.0) / width * 2;
-			double yp = ((i / width) - viewport.height / 2.0) / viewport.height
-					* 2;
+			double yp = ((i / width) - viewport.height / 2.0) / viewport.height * 2;
 
 			if (random.nextDouble() + offs < Math.sqrt(xp * xp + yp * yp))
 				pixels[i] = (random.nextInt(5) / 4) * 0x550000;
 		}
 	}
 
-	private void drawWeapons(boolean itemUsed, Item item, int xx, int yy) {
-		if (item != Item.none) {
-//			scaleDraw(Art.items, 1, xx - 15 * 2, yy - 15,
-//					32 * 2 * item.icon + 1, 32 * 2 + 1 * 2
-//							+ (itemUsed ? 32 * 2 : 0), 30 * 2, 30 * 2);
-//            if (item != Item.none) {
-                scaleDraw(Art.items, 5, xx, yy, 16 * item.icon + 1, 16 + 1 + (itemUsed ? 16 : 0), 15, 15, Art.getCol(item.color));
-//            }
+	private void drawWeapons(boolean itemUsed, Item item, int xx, int yy)
+	{
+		if (item != Item.none)
+		{
+			// scaleDraw(Art.items, 1, xx - 15 * 2, yy - 15,
+			// 32 * 2 * item.icon + 1, 32 * 2 + 1 * 2
+			// + (itemUsed ? 32 * 2 : 0), 30 * 2, 30 * 2);
+			// if (item != Item.none) {
+			scaleDraw(Art.items, 5, xx, yy, 16 * item.icon + 1, 16 + 1 + (itemUsed ? 16 : 0), 15, 15, Art.getCol(item.color));
+			// }
 		}
 	}
 

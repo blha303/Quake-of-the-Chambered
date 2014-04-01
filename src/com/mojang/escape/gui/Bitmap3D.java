@@ -47,7 +47,7 @@ public class Bitmap3D extends Bitmap
 		
 		Level level = game.level;
 
-		int r = 20;
+		int r = 64;
 
 		int xCenter = (int) (Math.floor(xCam));
 		int zCenter = (int) (Math.floor(yCam));
@@ -403,18 +403,22 @@ public class Bitmap3D extends Bitmap
 		}
 	}
 
+	float skyTime = 0;
+	
 	public void postProcess(Level level)
 	{
+		skyTime += 0.0080;
+		
 		for (int i = 0; i < width * height; i++)
 		{
 			double zl = zBuffer[i];
 
 			if (zl < 0)
 			{
-				int xx = ((int) Math.floor((i % width) - rot * 512 / (Math.PI * 2))) & 511;
+				int xx = ((int) Math.floor((i % width) - skyTime * 1024 / (Math.PI * 2))) & 1023;
 				int yy = i / width;
 
-				pixels[i] = Art.sky.pixels[xx + (yy / 2) * 512] * 0x444455;
+				pixels[i] = Art.sky.pixels[(xx / 2) + (yy / 2) * 512] * 0x443355;
 			} 
 			else
 			{
@@ -424,7 +428,7 @@ public class Bitmap3D extends Bitmap
 				double xx = ((i % width - width / 2.0) / width);
 				
 				int col = pixels[i];
-				int brightness = (int) (400 - zl * 6 * (xx * xx * 2 + 1));
+				int brightness = (int) (700 - zl * 6 * (xx * xx * 2 + 1));
 				
 				brightness = (brightness + ((xp + yp) & 0) * 4) >> 4 << 4;
 			
