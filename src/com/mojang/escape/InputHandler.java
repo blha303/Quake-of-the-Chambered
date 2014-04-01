@@ -33,7 +33,8 @@ public class InputHandler implements KeyListener, FocusListener, MouseListener, 
 		try
 		{
 			r = new Robot();
-		} catch (AWTException e)
+		}
+		catch (AWTException e)
 		{
 			e.printStackTrace();
 		}
@@ -102,9 +103,11 @@ public class InputHandler implements KeyListener, FocusListener, MouseListener, 
 	public void mousePressed(MouseEvent arg0)
 	{
 		if (arg0.getButton() == MouseEvent.BUTTON1)
-		{
 			keys[32] = true;
-		}
+		
+		if (arg0.getButton() == MouseEvent.BUTTON3)
+			keys[KeyEvent.VK_W] = true;
+		
 		mouseMoved(arg0);
 	}
 
@@ -179,6 +182,8 @@ public class InputHandler implements KeyListener, FocusListener, MouseListener, 
 	@Override
 	public void mouseReleased(MouseEvent arg0)
 	{
+		if (arg0.getButton() == MouseEvent.BUTTON3)
+			keys[KeyEvent.VK_W] = false;
 	}
 
 	@Override

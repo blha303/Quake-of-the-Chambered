@@ -82,8 +82,7 @@ public class Screen extends Bitmap {
 
 				drawWeapons(itemUsed, item, xx, yy);
 
-				if (Scene.getInstance().getPlayer().hurtTime > 0
-						|| Scene.getInstance().getPlayer().dead) {
+				if (Scene.getInstance().getPlayer().hurtTime > 0 || Scene.getInstance().getPlayer().dead) {
 					drawDeadMessage();
 				}
 			}
@@ -107,13 +106,11 @@ public class Screen extends Bitmap {
 			draw(timeString, 0, 4, 0xFFFFFF, 2);
 		}
 
-		if (game.menu != null) {
+		if (game.menu != null)
 			drawMenu(game);
-		}
 
-		if (!hasFocus) {
+		if (!hasFocus)
 			drawNotFocused();
-		}
 	}
 
 	private void drawLevelSwitch(Game game) {
@@ -155,14 +152,14 @@ public class Screen extends Bitmap {
 		// it
 //		draw("K:", 3, height - 26 + 0, 0x00ffff, 1);
 //		draw("" + Scene.getInstance().getPlayer().keys, 10, height - 26 + 0, 0xffffff);
-		draw("G:", 3, height - 26 + 8, 0xffff00);
+		draw("G:", (Art.playerhud.width * 3) + 8, height - 26 + 8, 0xffff00);
 		draw("" + Scene.getInstance().getPlayer().gold, 16, height - 26 + 8,
 				0xffffff);
-		draw("H:", 3, height - 26 + 16, 0xff0000);
+		draw("H:", (Art.playerhud.width * 3) + 8, height - 26 + 16, 0xff0000);
 		draw("" + Scene.getInstance().getPlayer().health, 16, height - 26 + 16,
 				0xffffff);
 		
-		scaleDraw(Art.playerhud, 2, 16, height - 48, 0, 0, 16, 16, Art.getCol(0xFF00FF));
+		scaleDraw(Art.playerhud, 3, 0, height - Art.playerhud.height * 3, 0, 0, 16, 16, Art.getCol(0x6B5237));
 
 		// draws items in hud
 		// for (int i = 0; i < 8; i++) {

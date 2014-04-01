@@ -1,6 +1,7 @@
 package com.mojang.escape;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 import com.mojang.escape.entities.Item;
 import com.mojang.escape.entities.Player;

@@ -39,6 +39,7 @@ import com.mojang.escape.level.block.PitBlock;
 import com.mojang.escape.level.block.PressurePlateBlock;
 import com.mojang.escape.level.block.SolidBlock;
 import com.mojang.escape.level.block.SpiritWallBlock;
+import com.mojang.escape.level.block.StarBlock;
 import com.mojang.escape.level.block.SwitchBlock;
 import com.mojang.escape.level.block.TorchBlock;
 import com.mojang.escape.level.block.VanishBlock;
@@ -193,7 +194,7 @@ public abstract class Level
 			addEntity(new GhostBossEntity(x, y));
 			
 			break;
-		case 0x1A2108 | 0xFF0007:
+		case 0x1A2108:
 			block.floorTex = 7;
 			block.ceilTex = 7;
 			
@@ -268,6 +269,8 @@ public abstract class Level
 			return new WinBlock();
 		if (col == 0xFF6D02)
 			return new LavaBlock();
+		if (col == 0xF939AE)
+			return new StarBlock();
 		
 		return new Block();
 	}

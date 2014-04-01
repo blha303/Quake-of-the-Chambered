@@ -53,6 +53,6 @@ public class WaterBlock extends Block
 	@Override
 	public double getWalkSpeed(Player player)
 	{
-		return 0.4;
+		return 0.7;
 	}
 }

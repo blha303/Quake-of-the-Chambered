@@ -195,6 +195,7 @@ public class Bitmap3D extends Bitmap
 				int yTile = yPix >> 4;
 
 				Block block = level.getBlock(xTile, yTile);
+				
 				int col = block.floorCol;
 				int tex = block.floorTex;
 				
@@ -214,7 +215,6 @@ public class Bitmap3D extends Bitmap
 				}
 			}
 		}
-
 	}
 
 	private void renderSprite(double x, double y, double z, int tex, int color)
@@ -422,11 +422,15 @@ public class Bitmap3D extends Bitmap
 				int yp = (i / width) * 14;
 
 				double xx = ((i % width - width / 2.0) / width);
+				
 				int col = pixels[i];
 				int brightness = (int) (400 - zl * 6 * (xx * xx * 2 + 1));
+				
 				brightness = (brightness + ((xp + yp) & 0) * 4) >> 4 << 4;
+			
 				if (brightness < 0)
 					brightness = 0;
+				
 				if (brightness > 255)
 					brightness = 255;
 
