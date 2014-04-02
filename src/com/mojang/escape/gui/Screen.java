@@ -60,9 +60,8 @@ public class Screen extends Bitmap
 				{
 					for (int y = 0; y < block.messages.length; y++)
 					{
-						viewport.draw(block.messages[y], (width - block.messages[y].length() * 6) / 2, (viewport.height - block.messages.length * 8) / 2 + y * 8 + 1, 0x111111);
-						viewport.draw(block.messages[y], (width - block.messages[y].length() * 6) / 2, (viewport.height - block.messages.length * 8) / 2 + y * 8, 0x555544);
-
+						viewport.draw(block.messages[y], (width - block.messages[y].length() * 6) / 2, (viewport.height - block.messages.length * 12) - 64 + y * 12 + 1, Art.getCol(0x000000));
+						viewport.draw(block.messages[y], (width - block.messages[y].length() * 6) / 2, (viewport.height - block.messages.length * 12) - 64 + y * 12, Art.getCol(0xFFFFFF));
 					}
 				}
 
@@ -74,7 +73,7 @@ public class Screen extends Bitmap
 				if (itemUsed)
 					xx = yy = 0;
 
-				xx += width / 2;
+				xx += width / 2 - (15 * 2);
 				yy += height - 15 * 5;
 
 				drawWeapons(itemUsed, item, xx, yy);
@@ -154,12 +153,12 @@ public class Screen extends Bitmap
 		// draw("K:", 3, height - 26 + 0, 0x00ffff, 1);
 		// draw("" + Scene.getInstance().getPlayer().keys, 10, height - 26 + 0,
 		// 0xffffff);
-		draw("G:", (Art.playerhud.width * 3) + 8, height - 26 + 8, 0xffff00);
-		draw("" + Scene.getInstance().getPlayer().gold, 16, height - 26 + 8, 0xffffff);
-		draw("H:", (Art.playerhud.width * 3) + 8, height - 26 + 16, 0xff0000);
-		draw("" + Scene.getInstance().getPlayer().health, 16, height - 26 + 16, 0xffffff);
+		draw("G:", 0, 16, 0xffff00, 2);
+		draw("" + Scene.getInstance().getPlayer().gold, 24, 16, 0xffffff, 2);
+		draw("H:", 0, 16 + 8, 0xff0000, 2);
+		draw("" + Scene.getInstance().getPlayer().health, 24, 16 + 8, 0xffffff, 2);
 
-		scaleDraw(Art.playerhud, 3, 0, height - Art.playerhud.height * 3, 0, 0, 16, 16, Art.getCol(0x6B5237));
+		//scaleDraw(Art.playerhud, 3, 0, height - Art.playerhud.height * 3, 0, 0, 16, 16, Art.getCol(0x6B5237));
 
 		// draws items in hud
 		// for (int i = 0; i < 8; i++) {

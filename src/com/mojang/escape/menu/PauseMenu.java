@@ -7,39 +7,60 @@ import com.mojang.escape.gui.Bitmap;
 
 import de.decgod.mod.RuntimeConfiguration;
 
-public class PauseMenu extends Menu {
-	private String[] options = {"Continue", "Abort game" };
+public class PauseMenu extends Menu
+{
+	private String[] options = { "Resume", "Quit" };
 	private int selected = 0;
 
 	@Override
-	public void render(Bitmap target) {
-		//target.draw(Art.logo, 0, 8, 0, 0, RuntimeConfiguration.getInstance().getWidth(), 36, Art.getCol(RuntimeConfiguration.getInstance().getTheme().white));
+	public void render(Bitmap target)
+	{
+		target.draw("Quake of the", 32, 8 + 1, Art.getCol(0x545454), 3);
+		target.draw("Quake of the", 32, 8, Art.getCol(0xFFFF64), 3);
 
-		for (int i = 0; i < options.length; i++) {
+		target.draw("Chambered", 32, 16 + 1, Art.getCol(0x545454), 4);
+		target.draw("Chambered", 32, 16, Art.getCol(0xFFFF64), 4);
+
+		for (int i = 0; i < options.length; i++)
+		{
 			String msg = options[i];
+			
 			int col = RuntimeConfiguration.getInstance().getTheme().inactiveText;
-			if (selected == i) {
+			
+			if (selected == i)
 				col = RuntimeConfiguration.getInstance().getTheme().activeText;
-			}
-			target.draw(msg, 40, 60 + i * 10, Art.getCol(col));
+			
+			target.draw(msg, 32, 128 + i * 10, Art.getCol(col));
 		}
 	}
 
 	@Override
-	public void tick(Game game, boolean up, boolean down, boolean left, boolean right, boolean use) {
-		if (up || down) Sound.click2.play();
-		if (up) selected--;
-		if (down) selected++;
-		if (selected < 0) selected = 0;
-		if (selected >= options.length) selected = options.length - 1;
-		if (use) {
+	public void tick(Game game, boolean up, boolean down, boolean left, boolean right, boolean use)
+	{
+		if (up || down)
+			Sound.click2.play();
+		
+		if (up)
+			selected--;
+		
+		if (down)
+			selected++;
+		
+		if (selected < 0)
+			selected = 0;
+		
+		if (selected >= options.length)
+			selected = options.length - 1;
+		
+		if (use)
+		{
 			Sound.click1.play();
-			if (selected == 0) {
-                game.setMenu(null);
-            }
-			if (selected == 1) {
-                game.setMenu(new TitleMenu());
-            }
+			
+			if (selected == 0)
+				game.setMenu(null);
+			
+			if (selected == 1)
+				game.setMenu(new TitleMenu());
 		}
 	}
 }

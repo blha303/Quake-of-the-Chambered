@@ -53,11 +53,11 @@ public class Block
 		for (int i = 0; i < sprites.size(); i++)
 		{
 			Sprite sprite = sprites.get(i);
+			
 			sprite.tick();
+			
 			if (sprite.removed)
-			{
 				sprites.remove(i--);
-			}
 		}
 	}
 
@@ -81,9 +81,11 @@ public class Block
 		
 	}
 
+	private double floorHeight = 0.20;
+	
 	public double getFloorHeight(Entity e)
 	{
-		return 0.20;
+		return this.floorHeight;
 	}
 
 	public double getWalkSpeed(Player player)
@@ -94,6 +96,11 @@ public class Block
 	public double getFriction(Player player)
 	{
 		return 0.8;
+	}
+	
+	public void setFloorHeight(Entity e, double floorHeight)
+	{
+		this.floorHeight = floorHeight;
 	}
 
 	public void trigger(boolean pressed)

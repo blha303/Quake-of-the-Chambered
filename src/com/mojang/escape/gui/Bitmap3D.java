@@ -100,7 +100,10 @@ public class Bitmap3D extends Bitmap
 						renderWall(xb + 1, zb + 1, xb + 1, zb, c.tex, c.col, 0);
 
 						if (e.ceilTex >= 0)
+						{
 							renderWall(xb + 1, zb + 1, xb + 1, zb, c.tex, c.col, 1);
+							renderWall(xb + 1, zb + 1, xb + 1, zb, c.tex, c.col, 2);
+						}
 					}
 		
 					if (!s.solidRender)
@@ -108,7 +111,10 @@ public class Bitmap3D extends Bitmap
 						renderWall(xb, zb + 1, xb + 1, zb + 1, c.tex, (c.col & 0xfefefe) >> 1, 0);
 						
 						if (s.ceilTex >= 0)
+						{
 							renderWall(xb, zb + 1, xb + 1, zb + 1, c.tex, (c.col & 0xfefefe) >> 1, 1);
+							renderWall(xb, zb + 1, xb + 1, zb + 1, c.tex, (c.col & 0xfefefe) >> 1, 2);
+						}
 					}
 				}
 				else
@@ -118,7 +124,10 @@ public class Bitmap3D extends Bitmap
 						renderWall(xb + 1, zb, xb + 1, zb + 1, e.tex, e.col, 0);
 						
 						if (e.ceilTex >= 0)
+						{
 							renderWall(xb + 1, zb, xb + 1, zb + 1, e.tex, e.col, 1);
+							renderWall(xb + 1, zb, xb + 1, zb + 1, e.tex, e.col, 2);
+						}
 					}
 					
 					if (s.solidRender)
@@ -126,7 +135,10 @@ public class Bitmap3D extends Bitmap
 						renderWall(xb + 1, zb + 1, xb, zb + 1, s.tex, (s.col & 0xfefefe) >> 1, 0);
 					
 					    if (s.ceilTex >= 0)
+					    {
 					    	renderWall(xb + 1, zb + 1, xb, zb + 1, s.tex, (s.col & 0xfefefe) >> 1, 1);
+					    	renderWall(xb + 1, zb + 1, xb, zb + 1, s.tex, (s.col & 0xfefefe) >> 1, 2);
+					    }
 					}
 				}
 			}
@@ -175,7 +187,7 @@ public class Bitmap3D extends Bitmap
 			{
 				floor = false;
 				
-				zd = (12 + zCam * 8) / -yd;
+				zd = (20 + zCam * 8) / -yd;
 			}
 
 			for (int x = 0; x < width; x++)
@@ -418,19 +430,19 @@ public class Bitmap3D extends Bitmap
 				int xx = ((int) Math.floor((i % width) - skyTime * 1024 / (Math.PI * 2))) & 1023;
 				int yy = i / width;
 
-				pixels[i] = Art.sky.pixels[(xx / 2) + (yy / 2) * 512] * 0x443355;
+				pixels[i] = Art.sky.pixels[(xx / 2) + (yy / 2) * 512] * Art.getCol(0x471560);
 			} 
 			else
 			{
 				int xp = (i % width);
 				int yp = (i / width) * 14;
 
-				double xx = ((i % width - width / 2.0) / width);
+				// double xx = ((i % width - width / 2.0) / width);
 				
 				int col = pixels[i];
-				int brightness = (int) (700 - zl * 6 * (xx * xx * 2 + 1));
+				int brightness = (int) (600 - zl * 1 * (3 + 1));
 				
-				brightness = (brightness + ((xp + yp) & 0) * 4) >> 4 << 4;
+				brightness = (brightness + ((xp + yp) & 0) * 5) >> 6 << 5;
 			
 				if (brightness < 0)
 					brightness = 0;
@@ -439,8 +451,8 @@ public class Bitmap3D extends Bitmap
 					brightness = 255;
 
 				int r = (col >> 16) & 0xff;
-				int g = (col >> 8) & 0xff;
-				int b = (col) & 0xff;
+				int g = (col >> 8) & 0xfc;
+				int b = (col) & 0xfc;
 
 				r = r * brightness / 255;
 				g = g * brightness / 255;

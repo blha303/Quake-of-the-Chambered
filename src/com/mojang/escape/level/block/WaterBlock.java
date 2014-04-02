@@ -26,7 +26,7 @@ public class WaterBlock extends Block
 		{
 			floorTex = 8 + random.nextInt(3);
 
-			floorCol = Art.getCol(0x0000ff);
+			floorCol = Art.getCol(0x302977);
 
 			steps = 16;
 		}

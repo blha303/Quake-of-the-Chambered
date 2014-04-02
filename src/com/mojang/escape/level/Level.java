@@ -37,6 +37,7 @@ import com.mojang.escape.level.block.LockedDoorBlock;
 import com.mojang.escape.level.block.LootBlock;
 import com.mojang.escape.level.block.PitBlock;
 import com.mojang.escape.level.block.PressurePlateBlock;
+import com.mojang.escape.level.block.SelBlock;
 import com.mojang.escape.level.block.SolidBlock;
 import com.mojang.escape.level.block.SpiritWallBlock;
 import com.mojang.escape.level.block.StarBlock;
@@ -59,7 +60,7 @@ public abstract class Level
 	public int ySpawn;
 
 	protected int wallCol = 0x9B6D47;
-	protected int floorCol = 0x5B4736;
+	protected int floorCol = 0x68492A;
 	protected int ceilCol = 0x5B4736;
 
 	protected int wallTex = 0;
@@ -214,7 +215,7 @@ public abstract class Level
 			
 			break;
 		case 0xE6D8BE:
-			block.addSprite(new Sprite(0, 1, 0, 6, Art.getCol(0xE6D8BE)));
+			block.addSprite(new Sprite(0, 2, 0, 6, Art.getCol(0xE6D8BE)));
 			block.addSprite(new Sprite(0, 0, 0, 7, Art.getCol(0xE6D8BE)));
 			
 			break;
@@ -227,35 +228,89 @@ public abstract class Level
 		case 0xF982AE:
 			block.messages = new String[1];
 			block.messages[0] = "THIS HALL SELECTS EASY SKILL.";
+			block.floorTex = 5;
+			block.floorCol = Art.getCol(0x5B4736);
 			
 			break;
 		case 0xF982FF:
 			block.messages = new String[1];
 			block.messages[0] = "THIS HALL SELECTS NORMAL SKILL.";
+			block.floorTex = 5;
+			block.floorCol = Art.getCol(0x5B4736);
 			
 			break;
 		case 0xFF82FF:
 			block.messages = new String[2];
-			block.messages[0] = "THIS HALL SELECTS HARD SKLL.";
+			block.messages[0] = "THIS HALL SELECTS HARD SKILL.";
 			block.messages[1] = "BE PREPARED.";
+			block.floorTex = 5;
+			block.floorCol = Art.getCol(0x5B4736);
+			
+			break;
+		case 0x0032FF:
+			block.messages = new String[3];
+			block.messages[0] = "THIS PASSAGE SELECTS 'NIGHTMARE' SKILL.";
+			block.messages[1] = "THIS DIFFICULTY IS NOT EVEN REMOTELY FAIR.";
+			block.messages[2] = "YOU HAVE BEEN WARNED.";
+			block.floorTex = 5;
+			block.floorCol = Art.getCol(0x5B4736);
 			
 			break;
 		case 0xFFB27F:
-			block.messages = new String[1];
+			block.messages = new String[4];
 			block.messages[0] = "SELECT YOUR DIFFICULTY.";
+			block.messages[1] = "LEFT - EASY";
+			block.messages[2] = "MIDDLE - NORMAL";
+			block.messages[3] = "RIGHT - HARD";
+			block.floorTex = 5;
+			block.floorCol = Art.getCol(0x5B4736);
 			
 			break;
 		case 0xFFD8BE:
-			block.addSprite(new Sprite(0, 0, 0, 15, Art.getCol(0xE6D8BE)));
+			block.addSprite(new Sprite(0, 0, 0, 15, Art.getCol(0xBFA982)));
+			block.setFloorHeight(player, 0.6);
+			
+			break;
+		case 0xF92EA4:
+			block.floorTex = 5;
+			block.floorCol = Art.getCol(0x5B4736);
 			
 			break;
 		case 0x33FFFF:
 			block.floorTex = 4;
-			block.floorCol = Art.getCol(0xFF3232);
+			block.floorCol = Art.getCol(0x99622C);
 			
 			break;
 		case 0x611000:
 			block.ceilTex = -1;
+			
+			break;
+		case 0xC0C0C0:
+			block.addSprite(new Sprite(0.3, 2, 0.3, 21, Art.getCol(0xCCCCCC)));
+			
+			break;
+		case 0xFF6401:
+			block.setFloorHeight(player, 0.5);
+			
+			break;
+		case 0xFF6402:
+			block.setFloorHeight(player, 0.7);
+			
+			break;
+		case 0xFF6403:
+			block.setFloorHeight(player, 0.9);
+			
+			break;
+		case 0xFF6404:
+			block.setFloorHeight(player, 1.1);
+			
+			break;
+		case 0xFF6405:
+			block.setFloorHeight(player, 1.2);
+			
+			break;
+		case 0xFF6406:
+			block.setFloorHeight(player, 1.3);
 			
 			break;
 		}
@@ -311,6 +366,8 @@ public abstract class Level
 			return new LavaBlock();
 		if (col == 0xF939AE)
 			return new StarBlock();
+		if (col == 0xF0FFF0)
+			return new SelBlock();
 		
 		return new Block();
 	}
