@@ -291,26 +291,32 @@ public abstract class Level
 			break;
 		case 0xFF6401:
 			block.setFloorHeight(player, 0.5);
-			
+			block.addSprite(new Sprite(0, block.getFloorHeight(player) / 2, 0, 3, Art.getCol(0xFF00FF)));
+
 			break;
 		case 0xFF6402:
 			block.setFloorHeight(player, 0.7);
-			
+			block.addSprite(new Sprite(0, block.getFloorHeight(player) / 2, 0, 3, Art.getCol(0xFF00FF)));
+
 			break;
 		case 0xFF6403:
 			block.setFloorHeight(player, 0.9);
-			
+			block.addSprite(new Sprite(0, block.getFloorHeight(player) / 2, 0, 3, Art.getCol(0xFF00FF)));
+
 			break;
 		case 0xFF6404:
 			block.setFloorHeight(player, 1.1);
-			
+			block.addSprite(new Sprite(0, block.getFloorHeight(player) / 2, 0, 3, Art.getCol(0xFF00FF)));
+
 			break;
 		case 0xFF6405:
 			block.setFloorHeight(player, 1.2);
+			block.addSprite(new Sprite(0, block.getFloorHeight(player) / 2, 0, 3, Art.getCol(0xFF00FF)));
 			
 			break;
 		case 0xFF6406:
 			block.setFloorHeight(player, 1.3);
+			block.addSprite(new Sprite(0, block.getFloorHeight(player) / 2, 0, 3, Art.getCol(0xFF00FF)));
 			
 			break;
 		}

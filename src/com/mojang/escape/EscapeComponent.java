@@ -18,11 +18,12 @@ import com.mojang.escape.gui.Screen;
 
 import de.decgod.mod.RuntimeConfiguration;
 
-public class EscapeComponent extends Canvas implements Runnable {
+public class EscapeComponent extends Canvas implements Runnable
+{
 	private static final long serialVersionUID = 1L;
 
 	// I have speedran this game. 4:54 seconds is my PB.
-	
+
 	// ninjadamage Mod
 	private final int WIDTH = RuntimeConfiguration.getInstance().getWidth();
 	private final int HEIGHT = RuntimeConfiguration.getInstance().getHeight();
@@ -44,8 +45,10 @@ public class EscapeComponent extends Canvas implements Runnable {
 	private Cursor emptyCursor, defaultCursor;
 	private boolean hadFocus = false;
 
-	public EscapeComponent() {
+	public EscapeComponent()
+	{
 		Dimension size = RuntimeConfiguration.getInstance().getScreen().getSize();
+		
 		setSize(size);
 		setPreferredSize(size);
 		setMinimumSize(size);
@@ -64,35 +67,43 @@ public class EscapeComponent extends Canvas implements Runnable {
 		addMouseListener(inputHandler);
 		addMouseMotionListener(inputHandler);
 		addMouseWheelListener(inputHandler);
-		emptyCursor = Toolkit.getDefaultToolkit().createCustomCursor(new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB),new Point(0, 0), "empty");
+		
+		emptyCursor = Toolkit.getDefaultToolkit().createCustomCursor(new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB), new Point(0, 0), "empty");
 		defaultCursor = getCursor();
-	
 	}
 
-	public synchronized void start() {
+	public synchronized void start()
+	{
 		if (running)
 			return;
+		
 		running = true;
 		thread = new Thread(this);
 		thread.start();
 	}
 
-	public synchronized void stop() {
+	public synchronized void stop()
+	{
 		if (!running)
 			return;
+
 		running = false;
-		try {
+
+		try
+		{
 			thread.join();
-		} catch (InterruptedException e) {
+		}
+		catch (InterruptedException e)
+		{
 			e.printStackTrace();
 		}
 	}
 
-    public static int frames;
+	public static int frames;
 
 	@Override
-	public void run() {
-
+	public void run()
+	{
 		int frames = 0;
 
 		double unprocessedSeconds = 0;
@@ -102,38 +113,57 @@ public class EscapeComponent extends Canvas implements Runnable {
 
 		requestFocus();
 
-		while (running) {
+		while (running)
+		{
 			long now = System.nanoTime();
 			long passedTime = now - lastTime;
+
 			lastTime = now;
+
 			if (passedTime < 0)
 				passedTime = 0;
+
 			if (passedTime > 100000000)
 				passedTime = 100000000;
 
 			unprocessedSeconds += passedTime / 1000000000.0;
 
 			boolean ticked = false;
-			while (unprocessedSeconds > secondsPerTick) {
+			
+			while (unprocessedSeconds > secondsPerTick)
+			{
 				tick();
+				
 				unprocessedSeconds -= secondsPerTick;
+				
 				ticked = true;
 
 				tickCount++;
-				if (tickCount % 60 == 0) {
-                    this.frames = frames;
+				
+				if (tickCount % 60 == 0)
+				{
+					this.frames = frames;
+					
 					lastTime += 1000;
+					
 					frames = 0;
 				}
 			}
 
-			if (ticked) {
+			if (ticked)
+			{
 				render();
+				
 				frames++;
-			} else {
-				try {
+			}
+			else
+			{
+				try
+				{
 					Thread.sleep(1);
-				} catch (InterruptedException e) {
+				}
+				catch (InterruptedException e)
+				{
 					e.printStackTrace();
 				}
 			}
@@ -141,29 +171,34 @@ public class EscapeComponent extends Canvas implements Runnable {
 		}
 	}
 
-	private void tick() {
+	private void tick()
+	{
 		if (hasFocus())
 			game.tick(inputHandler.keys);
 	}
 
 	BufferStrategy bs;
 	Graphics g;
-	
-	private void render() {
-		if (hadFocus != hasFocus()) {
+
+	private void render()
+	{
+		if (hadFocus != hasFocus())
+		{
 			hadFocus = !hadFocus;
 			setCursor(hadFocus ? emptyCursor : defaultCursor);
 		}
-		
+
 		bs = getBufferStrategy();
-		if (bs == null) {
+		if (bs == null)
+		{
 			createBufferStrategy(3);
 			return;
 		}
 
 		screen.render(game, hasFocus());
 
-		for (int i = 0; i < screenSize; i++) {
+		for (int i = 0; i < screenSize; i++)
+		{
 			pixels[i] = screen.pixels[i];
 		}
 
@@ -173,8 +208,9 @@ public class EscapeComponent extends Canvas implements Runnable {
 		g.dispose();
 		bs.show();
 	}
-		
-	public static void main(String[] args) {
+
+	public static void main(String[] args)
+	{
 		EscapeComponent game = new EscapeComponent();
 		JFrame frame = new JFrame("Decay of the Goddess");
 		frameOut = frame;
@@ -182,7 +218,7 @@ public class EscapeComponent extends Canvas implements Runnable {
 
 		panel.add(game, BorderLayout.CENTER);
 		panel.setDoubleBuffered(true);
-		
+
 		frame.setContentPane(panel);
 		frame.pack();
 		frame.setLocationRelativeTo(null);

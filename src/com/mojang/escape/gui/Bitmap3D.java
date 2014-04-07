@@ -196,6 +196,7 @@ public class Bitmap3D extends Bitmap
 					continue;
 
 				double xd = (xCenter - x) / fov;
+				
 				xd *= zd;
 
 				double xx = xd * rCos + zd * rSin + (xCam + 0.5) * 8;

@@ -230,11 +230,11 @@ public class Player extends Entity
 		xm /= dd;
 		zm /= dd;
 
-		bob *= 0.6;
+		bob *= 0.8;
 		turnBob *= 0.8;
 		turnBob += rota;
 		bob += Math.sqrt(xm * xm + zm * zm);
-		bobPhase += Math.sqrt(xm * xm + zm * zm) * onBlock.getWalkSpeed(this);
+		bobPhase += Math.sqrt(xm * xm + zm * zm) * onBlock.getWalkSpeed(this) / 1.5;
 		
 		boolean wasSliding = sliding;
 		
