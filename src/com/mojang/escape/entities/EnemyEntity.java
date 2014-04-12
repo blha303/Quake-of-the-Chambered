@@ -73,7 +73,7 @@ public class EnemyEntity extends Entity {
 		if (health <= 0) {
 			int xt = (int) (x + 0.5);
 			int zt = (int) (z + 0.5);
-			level.getBlock(xt, zt).addSprite(new PoofSprite(x - xt, 0, z - zt));
+			level.getBlock(xt, zt).addSprite(new PoofSprite(x - xt, 0, z - zt, defaultColor));
 			die();
 			remove();
 			Sound.kill.play();

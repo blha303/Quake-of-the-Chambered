@@ -98,10 +98,10 @@ public class Bitmap3D extends Bitmap
 					if (!e.solidRender)
 					{
 						renderWall(xb + 1, zb + 1, xb + 1, zb, c.tex, c.col, 0);
+						renderWall(xb + 1, zb + 1, xb + 1, zb, c.tex, c.col, 1);
 
 						if (e.ceilTex >= 0)
 						{
-							renderWall(xb + 1, zb + 1, xb + 1, zb, c.tex, c.col, 1);
 							renderWall(xb + 1, zb + 1, xb + 1, zb, c.tex, c.col, 2);
 						}
 					}
@@ -109,10 +109,10 @@ public class Bitmap3D extends Bitmap
 					if (!s.solidRender)
 					{
 						renderWall(xb, zb + 1, xb + 1, zb + 1, c.tex, (c.col & 0xfefefe) >> 1, 0);
+						renderWall(xb, zb + 1, xb + 1, zb + 1, c.tex, (c.col & 0xfefefe) >> 1, 1);
 						
 						if (s.ceilTex >= 0)
 						{
-							renderWall(xb, zb + 1, xb + 1, zb + 1, c.tex, (c.col & 0xfefefe) >> 1, 1);
 							renderWall(xb, zb + 1, xb + 1, zb + 1, c.tex, (c.col & 0xfefefe) >> 1, 2);
 						}
 					}
@@ -122,10 +122,10 @@ public class Bitmap3D extends Bitmap
 					if (e.solidRender)
 					{
 						renderWall(xb + 1, zb, xb + 1, zb + 1, e.tex, e.col, 0);
-						
+						renderWall(xb + 1, zb, xb + 1, zb + 1, e.tex, e.col, 1);
+					
 						if (e.ceilTex >= 0)
 						{
-							renderWall(xb + 1, zb, xb + 1, zb + 1, e.tex, e.col, 1);
 							renderWall(xb + 1, zb, xb + 1, zb + 1, e.tex, e.col, 2);
 						}
 					}
@@ -133,10 +133,10 @@ public class Bitmap3D extends Bitmap
 					if (s.solidRender)
 					{
 						renderWall(xb + 1, zb + 1, xb, zb + 1, s.tex, (s.col & 0xfefefe) >> 1, 0);
+				    	renderWall(xb + 1, zb + 1, xb, zb + 1, s.tex, (s.col & 0xfefefe) >> 1, 1);
 					
 					    if (s.ceilTex >= 0)
 					    {
-					    	renderWall(xb + 1, zb + 1, xb, zb + 1, s.tex, (s.col & 0xfefefe) >> 1, 1);
 					    	renderWall(xb + 1, zb + 1, xb, zb + 1, s.tex, (s.col & 0xfefefe) >> 1, 2);
 					    }
 					}

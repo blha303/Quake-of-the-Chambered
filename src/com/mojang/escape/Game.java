@@ -17,7 +17,6 @@ import de.decgod.mod.Scene;
 
 public class Game
 {
-
 	public Level level;
 	public static Player player = new Player();
 	public int pauseTime;
@@ -34,7 +33,7 @@ public class Game
 	public void newGame()
 	{
 		Level.clear();
-		level = Level.loadLevel(this, "select");
+		level = Level.loadLevel(this, "test");
 		player = new Player();
 		player.setHealth(20);
 		player.level = level;

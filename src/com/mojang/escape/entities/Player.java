@@ -64,8 +64,9 @@ public class Player extends Entity
 			items[i] = Item.none;
 		
 		items[1] = Item.pistol;
+		items[0] = Item.powerglove;
 		
-		ammo = 20;
+		ammo = 100;
 	}
 
 	public void turnLeft(double variation)

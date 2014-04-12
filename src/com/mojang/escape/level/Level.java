@@ -20,6 +20,7 @@ import com.mojang.escape.entities.EyeEntity;
 import com.mojang.escape.entities.GhostBossEntity;
 import com.mojang.escape.entities.GhostEntity;
 import com.mojang.escape.entities.Item;
+import com.mojang.escape.entities.KeyEntity;
 import com.mojang.escape.entities.Medikit;
 import com.mojang.escape.entities.OgreEntity;
 import com.mojang.escape.entities.Player;
@@ -29,6 +30,7 @@ import com.mojang.escape.level.block.BarsBlock;
 import com.mojang.escape.level.block.Block;
 import com.mojang.escape.level.block.ChestBlock;
 import com.mojang.escape.level.block.DoorBlock;
+import com.mojang.escape.level.block.ElevatorBlock;
 import com.mojang.escape.level.block.FinalUnlockBlock;
 import com.mojang.escape.level.block.IceBlock;
 import com.mojang.escape.level.block.LadderBlock;
@@ -195,6 +197,10 @@ public abstract class Level
 			addEntity(new GhostBossEntity(x, y));
 			
 			break;
+		case 0xFF9834:
+			addEntity(new KeyEntity(x, y));
+			
+			break;
 		case 0x1A2108:
 			block.floorTex = 7;
 			block.ceilTex = 7;
@@ -230,6 +236,7 @@ public abstract class Level
 			block.messages[0] = "THIS HALL SELECTS EASY SKILL.";
 			block.floorTex = 5;
 			block.floorCol = Art.getCol(0x5B4736);
+			block.setFloorHeight(player, 0.1);
 			
 			break;
 		case 0xF982FF:
@@ -237,6 +244,7 @@ public abstract class Level
 			block.messages[0] = "THIS HALL SELECTS NORMAL SKILL.";
 			block.floorTex = 5;
 			block.floorCol = Art.getCol(0x5B4736);
+			block.setFloorHeight(player, 0.1);
 			
 			break;
 		case 0xFF82FF:
@@ -245,6 +253,7 @@ public abstract class Level
 			block.messages[1] = "BE PREPARED.";
 			block.floorTex = 5;
 			block.floorCol = Art.getCol(0x5B4736);
+			block.setFloorHeight(player, 0.1);
 			
 			break;
 		case 0x0032FF:
@@ -254,6 +263,7 @@ public abstract class Level
 			block.messages[2] = "YOU HAVE BEEN WARNED.";
 			block.floorTex = 5;
 			block.floorCol = Art.getCol(0x5B4736);
+			block.setFloorHeight(player, 0.1);
 			
 			break;
 		case 0xFFB27F:
@@ -264,6 +274,7 @@ public abstract class Level
 			block.messages[3] = "RIGHT - HARD";
 			block.floorTex = 5;
 			block.floorCol = Art.getCol(0x5B4736);
+			block.setFloorHeight(player, 0.1);
 			
 			break;
 		case 0xFFD8BE:
@@ -374,6 +385,8 @@ public abstract class Level
 			return new StarBlock();
 		if (col == 0xF0FFF0)
 			return new SelBlock();
+		if (col == 0x7F92FF)
+			return new ElevatorBlock();
 		
 		return new Block();
 	}

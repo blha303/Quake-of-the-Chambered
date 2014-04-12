@@ -22,9 +22,6 @@ public class EscapeComponent extends Canvas implements Runnable
 {
 	private static final long serialVersionUID = 1L;
 
-	// I have speedran this game. 4:54 seconds is my PB.
-
-	// ninjadamage Mod
 	private final int WIDTH = RuntimeConfiguration.getInstance().getWidth();
 	private final int HEIGHT = RuntimeConfiguration.getInstance().getHeight();
 	private final int SCALE = RuntimeConfiguration.getInstance().getScalefactor();
@@ -32,7 +29,6 @@ public class EscapeComponent extends Canvas implements Runnable
 	private final int height_scaled = HEIGHT * SCALE;
 	private final int screenSize = WIDTH * HEIGHT;
 	public static JFrame frameOut;
-	// ninjadamage Mod
 
 	private boolean running;
 	private Thread thread;
@@ -67,6 +63,8 @@ public class EscapeComponent extends Canvas implements Runnable
 		addMouseListener(inputHandler);
 		addMouseMotionListener(inputHandler);
 		addMouseWheelListener(inputHandler);
+		
+		Sound.ambience0.loop();
 		
 		emptyCursor = Toolkit.getDefaultToolkit().createCustomCursor(new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB), new Point(0, 0), "empty");
 		defaultCursor = getCursor();
@@ -142,7 +140,7 @@ public class EscapeComponent extends Canvas implements Runnable
 				
 				if (tickCount % 60 == 0)
 				{
-					this.frames = frames;
+					EscapeComponent.frames = frames;
 					
 					lastTime += 1000;
 					

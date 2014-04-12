@@ -26,7 +26,9 @@ public class Sound {
 	public static Sound ladder = loadSound("/snd/ladder.wav");
 	public static Sound potion = loadSound("/snd/potion.wav");
 	public static Sound wind = loadSound("/snd/wind.wav");
-
+	public static Sound ambient = loadSound("/snd/fire1.wav");
+	public static Sound ambience0 = loadSound("/snd/ambience0.wav");
+	
 	private Clip clip;
 	
 	public static Sound loadSound(String fileName) {
