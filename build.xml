@@ -14,7 +14,9 @@
 
     <target name="compile" description="build class files" depends="clean">
         <mkdir dir="${class.dir}"/>
-        <javac srcdir="${source.dir}" destdir="${class.dir}"/>
+        <javac srcdir="${source.dir}" destdir="${class.dir}">
+            <compilerarg line="-encoding utf-8"/>
+        </javac>
     </target>
 
     <target name="jar" depends="compile">
