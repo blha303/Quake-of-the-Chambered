@@ -22,11 +22,12 @@
     <target name="jar" depends="compile">
         <mkdir dir="${jar.dir}"/>
 
-        <jar destfile="${jar.file}" basedir="${class.dir}" includes="${res.dir}/">
+        <jar destfile="${jar.file}" basedir="${class.dir}">
             <manifest>
                 <attribute name="Main-Class" value="${main-class}"/>
                 <attribute name="Class-Path" value="."/>
             </manifest>
+            <fileset dir="${res.dir}"/>
         </jar>  
     </target>
 
