@@ -16,6 +16,10 @@ public class Art {
     public static Bitmap sky = loadBitmap("/tex/sky.png");
     public static Bitmap logo = loadBitmap("/gui/logo.png");
     public static Bitmap playerhud = loadBitmap("/tex/playerhud.png");
+    
+    // added the spritesheet guicomponents to kinda make a gui for the game to make it neat. right now the gui feels a bit messy.
+    
+    public static Bitmap guicomponents = loadBitmap("/tex/guicomponents.png");
 
     public static Bitmap loadBitmap(String fileName) {
         try {

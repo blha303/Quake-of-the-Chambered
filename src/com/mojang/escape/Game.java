@@ -35,6 +35,8 @@ public class Game
 		Level.clear();
 		level = Level.loadLevel(this, "test");
 		player = new Player();
+		// note: fixed a problem where you're permanently dead
+		Scene.getInstance().getPlayer().dead = false;
 		player.setHealth(20);
 		player.level = level;
 		level.player = player;
@@ -65,7 +67,7 @@ public class Game
 		if (pauseTime > 0)
 		{
 			pauseTime--;
-
+			
 			return;
 		}
 
@@ -121,8 +123,13 @@ public class Game
 			keys[KeyEvent.VK_A] = false;
 			keys[KeyEvent.VK_D] = false;
 
+			// this variable (gamePaused) tells the game if it is paused or not.
+			
+			EscapeComponent.gamePaused = true;
+			
 			menu.tick(this, up, down, left, right, use);
-		} else if (!player.getBash().isOpen())
+		} 
+		else if (!player.getBash().isOpen())
 		{
 			player.tick(up, down, left, right, turnLeft, turnRight);
 			if (use)
@@ -131,6 +138,8 @@ public class Game
 			}
 
 			level.tick();
+			
+			EscapeComponent.gamePaused = false;
 		}
 
 		Scene.registerComp(level, this, player);
