@@ -28,6 +28,8 @@ public class InputHandler implements KeyListener, FocusListener, MouseListener, 
 	private Robot r;
 	private boolean mouseMoving = true;
 
+	public boolean allowLock = false;
+	
 	public InputHandler()
 	{
 		try
@@ -85,16 +87,21 @@ public class InputHandler implements KeyListener, FocusListener, MouseListener, 
 	 */
 	public void centerMouse()
 	{
-		mouseMoving = false;
-
-		int screenCenterX = 0, screenCenterY = 0;
-
-		screenCenterX = EscapeComponent.frameOut.getX() + (int) RuntimeConfiguration.getInstance().getScreen().getWidth() / 2;
-		screenCenterY = EscapeComponent.frameOut.getY() + (int) RuntimeConfiguration.getInstance().getScreen().getHeight() / 2;
-
-		oldx = 0;
+		// this if statement checks if you're not paused, and if your mouse is focused on to the display.
 		
-		r.mouseMove(screenCenterX, screenCenterY);
+		if(allowLock && !EscapeComponent.gamePaused)
+		{
+			mouseMoving = false;
+	
+			int screenCenterX = 0, screenCenterY = 0;
+	
+			screenCenterX = EscapeComponent.frameOut.getX() + (int) RuntimeConfiguration.getInstance().getScreen().getWidth() / 2;
+			screenCenterY = EscapeComponent.frameOut.getY() + (int) RuntimeConfiguration.getInstance().getScreen().getHeight() / 2;
+	
+			oldx = 0;
+		
+			r.mouseMove(screenCenterX, screenCenterY);
+		}
 	}
 
 	int rightBorder = (int) RuntimeConfiguration.getInstance().getScreen().getWidth();
@@ -118,8 +125,10 @@ public class InputHandler implements KeyListener, FocusListener, MouseListener, 
 	{
 		for (int i = 0; i < keys.length; i++)
 			keys[i] = false;
+	
+		// this locks it only if it is focused.
 		
-		centerMouse();
+		allowLock = false;
 	}
 
 	@Override
@@ -189,6 +198,9 @@ public class InputHandler implements KeyListener, FocusListener, MouseListener, 
 	@Override
 	public void focusGained(FocusEvent arg0)
 	{
+		// this makes it where it locks if it is focused
+		
+		allowLock = true;
 	}
 
 	@Override
