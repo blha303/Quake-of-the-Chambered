@@ -141,7 +141,7 @@ public class RuntimeConfiguration {
     public void setPlayername(String playername) {
         this.playername = playername;
     }
-
+    
     public Dimension getScreen() {
         return screen;
     }

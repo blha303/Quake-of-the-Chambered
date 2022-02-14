@@ -68,13 +68,19 @@ public class Screen extends Bitmap
 				draw(viewport, vpxo, vpyo);
 
 				int xx = (int) (Scene.getInstance().getPlayer().turnBob * 32);
-				int yy = (int) (Math.sin(Scene.getInstance().getPlayer().bobPhase * 0.1) * 1 * Scene.getInstance().getPlayer().bob + Scene.getInstance().getPlayer().bob * 2);
+				
+				// yy bobbing animation is a bit more exaggerated to match a bit of the speed. it's also a little more big.
+				
+				int yy = (int) (Math.sin(Scene.getInstance().getPlayer().bobPhase / 2) * 1 * Scene.getInstance().getPlayer().bob + Scene.getInstance().getPlayer().bob * Math.PI);
 
 				if (itemUsed)
 					xx = yy = 0;
 
 				xx += width / 2 - (15 * 2);
-				yy += height - 15 * 5;
+				
+				// this operation was modified to make it a bit easier to see the item.
+				
+				yy += height - (16 * 6) - 24;
 
 				drawWeapons(itemUsed, item, xx, yy);
 
@@ -82,7 +88,7 @@ public class Screen extends Bitmap
 					drawDeadMessage();
 			}
 
-			draw(EscapeComponent.frames + "", 0, 0, 0xFFFFFF);
+			draw(EscapeComponent.frames + "fps", 0, 0, 0xFFFFFF);
 
 			drawHud(item);
 
@@ -155,9 +161,17 @@ public class Screen extends Bitmap
 		// 0xffffff);
 		draw("G:", 0, 16, 0xffff00, 2);
 		draw("" + Scene.getInstance().getPlayer().gold, 24, 16, 0xffffff, 2);
-		draw("H:", 0, 16 + 8, 0xff0000, 2);
-		draw("" + Scene.getInstance().getPlayer().health, 24, 16 + 8, 0xffffff, 2);
-
+		
+		draw("H:", 32, 16, 0xff0000, 2);
+		draw("" + Scene.getInstance().getPlayer().health, 48, 16, 0xffffff, 2);
+		
+		// was gonna use a hearts based ui for the health like minecraft but it floods the screen, so i'm just gonna keep the old system.
+		
+		/*for (int i = 0; i < Scene.getInstance().getPlayer().health; i++)
+		{
+			scaleDraw(Art.guicomponents, 1, ((width - (20 * 16)) + (16 * i)) - 8, 8, 0, 0, 16, 16, Art.getCol(0xff0000));
+		}*/
+		
 		//scaleDraw(Art.playerhud, 3, 0, height - Art.playerhud.height * 3, 0, 0, 16, 16, Art.getCol(0x6B5237));
 
 		// draws items in hud
@@ -228,7 +242,10 @@ public class Screen extends Bitmap
 			// 32 * 2 * item.icon + 1, 32 * 2 + 1 * 2
 			// + (itemUsed ? 32 * 2 : 0), 30 * 2, 30 * 2);
 			// if (item != Item.none) {
-			scaleDraw(Art.items, 5, xx, yy, 16 * item.icon + 1, 16 + 1 + (itemUsed ? 16 : 0), 15, 15, Art.getCol(item.color));
+			
+			// made it scale up to 8, as to make it more visible.
+			
+			scaleDraw(Art.items, 8, xx, yy, 16 * item.icon + 1, 16 + 1 + (itemUsed ? 16 : 0), 15, 15, Art.getCol(item.color));
 			// }
 		}
 	}

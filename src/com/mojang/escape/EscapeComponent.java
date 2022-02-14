@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 
 import com.mojang.escape.gui.Screen;
 
+import de.decgod.mod.Messages;
 import de.decgod.mod.RuntimeConfiguration;
 
 public class EscapeComponent extends Canvas implements Runnable
@@ -41,6 +42,9 @@ public class EscapeComponent extends Canvas implements Runnable
 	private Cursor emptyCursor, defaultCursor;
 	private boolean hadFocus = false;
 
+	private boolean shouldHide = false;
+	public static boolean gamePaused = true;
+	
 	public EscapeComponent()
 	{
 		Dimension size = RuntimeConfiguration.getInstance().getScreen().getSize();
@@ -171,6 +175,11 @@ public class EscapeComponent extends Canvas implements Runnable
 
 	private void tick()
 	{
+		
+		// basically if game not paused, hide cursor.
+		
+		shouldHide = !gamePaused;
+		
 		if (hasFocus())
 			game.tick(inputHandler.keys);
 	}
@@ -180,11 +189,10 @@ public class EscapeComponent extends Canvas implements Runnable
 
 	private void render()
 	{
-		if (hadFocus != hasFocus())
-		{
-			hadFocus = !hadFocus;
-			setCursor(hadFocus ? emptyCursor : defaultCursor);
-		}
+		
+		// made the cursor hiding more efficient as i want to see my cursor while paused.
+		
+		this.setCursor(shouldHide? emptyCursor : defaultCursor);
 
 		bs = getBufferStrategy();
 		if (bs == null)
@@ -210,7 +218,10 @@ public class EscapeComponent extends Canvas implements Runnable
 	public static void main(String[] args)
 	{
 		EscapeComponent game = new EscapeComponent();
-		JFrame frame = new JFrame("Decay of the Goddess");
+		
+		// the Messages.getString() function is getting the screen name variable that i added into the config.properties.
+		
+		JFrame frame = new JFrame(Messages.getString("screenname"));
 		frameOut = frame;
 		JPanel panel = new JPanel(new BorderLayout());
 
